@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="13f878d1490f4af593a73f404df3e700" Name="Diagram1">
+        <EntityTypeShape EntityType="soccenModel.bank" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.bankaccount" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.customer" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.customersocialtype" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.service" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.serviceexecution" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.servicesocialtype" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.socialtype" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="soccenModel.street" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="soccenModel.BankBankAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.CustomerBankAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.CustomerSocialType1" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.IdStreet" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.ServiceExecutionCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.SocialTypeCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.ServiceExecutionService" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.ServiceSocialType1" ManuallyRouted="false" />
+        <AssociationConnector Association="soccenModel.SocialTypeService" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

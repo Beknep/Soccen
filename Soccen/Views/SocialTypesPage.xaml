@@ -1,0 +1,138 @@
+﻿<Page x:Class="Soccen.Views.SocialTypesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Soccen.Views"
+      xmlns:Models="clr-namespace:Soccen.Models"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SocialTypesPage" Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="socialTypeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:socialtype}, CreateList=True}"/>
+        <CollectionViewSource x:Key="serviceViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:service}, CreateList=True}"/>
+        <RoutedUICommand x:Key="FirstCommand" Text="First"/>
+        <RoutedUICommand x:Key="LastCommand" Text="Last"/>
+        <RoutedUICommand x:Key="NextCommand" Text="Next"/>
+        <RoutedUICommand x:Key="PreviousCommand" Text="Previous"/>
+        <RoutedUICommand x:Key="DeleteCommand" Text="Delete"/>
+        <RoutedUICommand x:Key="UpdateCommand" Text="Update"/>
+        <RoutedUICommand x:Key="AddCommand" Text="Add"/>
+        <RoutedUICommand x:Key="CancelCommand" Text="Cancel"/>
+        <RoutedUICommand x:Key="SelectService" Text="SelectService"/>
+        <RoutedUICommand x:Key="DeleteService" Text="DeleteService"/>
+        <CollectionViewSource x:Key="socialtypeservicesocialtypesViewSource" Source="{Binding servicesocialtypes, Source={StaticResource socialTypeViewSource}}"/>
+    </Page.Resources>
+
+    <Page.CommandBindings>
+        <CommandBinding Command="{StaticResource FirstCommand}" Executed="FirstCommandHandler"/>
+        <CommandBinding Command="{StaticResource LastCommand}" Executed="LastCommandHandler"/>
+        <CommandBinding Command="{StaticResource NextCommand}" Executed="NextCommandHandler"/>
+        <CommandBinding Command="{StaticResource PreviousCommand}" Executed="PreviousCommandHandler"/>
+        <CommandBinding Command="{StaticResource DeleteCommand}" Executed="DeleteCommandHandler"/>
+        <CommandBinding Command="{StaticResource UpdateCommand}" Executed="UpdateCommandHandler"/>
+        <CommandBinding Command="{StaticResource AddCommand}" Executed="AddCommandHandler"/>
+        <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommandHandler"/>
+        <CommandBinding Command="{StaticResource SelectService}" Executed="SelectServiceCommandHandler"/>
+        <CommandBinding Command="{StaticResource DeleteService}" Executed="DeleteServiceCommandHandler"/>
+    </Page.CommandBindings>
+
+
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{StaticResource socialTypeViewSource}" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="existingSocialTypeGrid"  HorizontalAlignment="Left" Visibility="Visible" VerticalAlignment="Top"  Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <Label Content="ID:" Grid.Column="0"  Grid.Row="0" Style="{StaticResource BaseInfoLabel}"/>
+            <Label x:Name="idSocialTypeLabel" Grid.Column="1" Grid.Row="0" Content="{Binding IdSocialType}" Style="{StaticResource BaseInfoLabel}"/>
+            <Label Content="Назва:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+            <TextBox x:Name="titleTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding Title, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}" />
+            <Label Content="Опис:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+            <TextBox x:Name="descriptionTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}" />
+        </Grid>
+
+        <Grid x:Name="newSocialTypeGrid"  HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding newSocialType, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, UpdateSourceTrigger=Explicit}" Grid.Row="0" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="ID:" Grid.Column="0"  Grid.Row="0" Style="{StaticResource BaseInfoLabel}"/>
+            <Label x:Name="add_idSocialTypeLabel" Grid.Column="1" Grid.Row="0" Content="{Binding IdSocialType}" Style="{StaticResource BaseInfoLabel}"/>
+            <Label Content="Назва:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+            <TextBox x:Name="add_titleTextBox" Text="{Binding Title, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+            <Label Content="Опис:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+            <TextBox x:Name="add_descriptionTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource DescriptionTextBox}" />
+        </Grid>
+
+        <Grid Grid.Row="1" Height="100" Name="SocialTypeServiceGrid" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Content="Послуги підопічного:" Style="{StaticResource HeaderLabel}"/>
+            <ListBox Grid.Column="0" Grid.Row="1" Name="SocialTypesServiceList" ItemsSource="{Binding Source={StaticResource socialtypeservicesocialtypesViewSource}}" DisplayMemberPath="service.Title"/>
+
+            <WrapPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="btnSelectService" Content=" Добавити " Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource SelectService}"/>
+                <Button Name="btnDeleteService" Content=" Видалити " Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource DeleteService}"/>
+            </WrapPanel>
+
+            <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" Content="Список послуг:" Style="{StaticResource HeaderLabel}"/>
+            <ListBox Grid.Column="2" Grid.Row="1" Name="ServiceList" ItemsSource="{Binding Source={StaticResource serviceViewSource}}" DisplayMemberPath="Title"/>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Height="36"  Background="{StaticResource DarkBaseBrush}">
+                <Button Name="btnFirst" Content=" |◄ "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource FirstCommand}"/>
+                <Button Name="btnPrev" Content=" ◄ "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource PreviousCommand}"/>
+                <Button Name="btnNext" Content=" ► "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource NextCommand}"/>
+                <Button Name="btnLast" Content=" ►| "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource LastCommand}"/>
+                <Button Name="btnDelete" Content=" Видалити "   Style="{StaticResource BaseButtonStyle}" Command="{StaticResource DeleteCommand}"/>
+                <Button Name="btnUpdate" Content=" Зберегти "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource UpdateCommand}"/>
+                <Button Name="btnAdd" Content=" Новий запис "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource AddCommand}"/>
+                <Button Name="btnCancel" Content=" Очистити "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource CancelCommand}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="3">
+
+            <DataGrid x:Name="socialTypeDataGrid" Style="{StaticResource BaseDataGridStyle}" ItemsSource="{Binding}" CanUserAddRows="False" MouseDoubleClick="socialTypeDataGrid_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="idSocialTypeColumn" Binding="{Binding IdSocialType}" Header="ID" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="titleColumn" Binding="{Binding Title}" Header="Назва" IsReadOnly="False"/>
+                    <DataGridTextColumn x:Name="descriptionColumn" Binding="{Binding Description}"  Header="Опис"  IsReadOnly="False" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
+</Page>
+

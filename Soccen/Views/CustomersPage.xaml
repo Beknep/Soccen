@@ -1,0 +1,411 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Soccen.Views"
+      xmlns:Models="clr-namespace:Soccen.Models" 
+      x:Class="Soccen.Views.CustomersPage"
+      mc:Ignorable="d" 
+      Title="CustomersPage" Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="customersViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:customer}, CreateList=True}"/>
+        <CollectionViewSource x:Key="streetViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:street}, CreateList=True}"/>
+        <CollectionViewSource x:Key="socialTypesViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:socialtype}, CreateList=True}"/>
+        <RoutedUICommand x:Key="FirstCommand" Text="First"/>
+        <RoutedUICommand x:Key="LastCommand" Text="Last"/>
+        <RoutedUICommand x:Key="NextCommand" Text="Next"/>
+        <RoutedUICommand x:Key="PreviousCommand" Text="Previous"/>
+        <RoutedUICommand x:Key="DeleteCommand" Text="Delete"/>
+        <RoutedUICommand x:Key="UpdateCommand" Text="Update"/>
+        <RoutedUICommand x:Key="AddCommand" Text="Add"/>
+        <RoutedUICommand x:Key="CancelCommand" Text="Cancel"/>
+        <RoutedUICommand x:Key="Command" Text="Add"/>
+        <RoutedUICommand x:Key="SelectSocialTypes" Text="SelectSocialTypes"/>
+        <RoutedUICommand x:Key="DeleteSocialTypes" Text="DeleteSocialTypes"/>
+        <CollectionViewSource x:Key="customercustomersocialtypesViewSource" Source="{Binding customersocialtypes, Source={StaticResource customersViewSource}}"/>
+    </Page.Resources>
+
+    <Page.CommandBindings>
+        <CommandBinding Command="{StaticResource FirstCommand}" Executed="FirstCommandHandler"/>
+        <CommandBinding Command="{StaticResource LastCommand}" Executed="LastCommandHandler"/>
+        <CommandBinding Command="{StaticResource NextCommand}" Executed="NextCommandHandler"/>
+        <CommandBinding Command="{StaticResource PreviousCommand}" Executed="PreviousCommandHandler"/>
+        <CommandBinding Command="{StaticResource DeleteCommand}" Executed="DeleteCommandHandler"/>
+        <CommandBinding Command="{StaticResource UpdateCommand}" Executed="UpdateCommandHandler"/>
+        <CommandBinding Command="{StaticResource AddCommand}" Executed="AddCommandHandler"/>
+        <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommandHandler"/>
+        <CommandBinding Command="{StaticResource SelectSocialTypes}" Executed="SelectSocialTypesCommandHandler"/>
+        <CommandBinding Command="{StaticResource DeleteSocialTypes}" Executed="DeleteSocialTypesCommandHandler"/>
+    </Page.CommandBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+
+
+                <Grid x:Name="existingCustomerGrid" DataContext="{StaticResource customersViewSource}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid x:Name="CustomerPersonalInfoGrid" Grid.Row="0" Grid.Column="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Персональна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+
+                        <Label Content="ID:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <Label x:Name="idCustomerLabel" Grid.Column="1" Grid.Row="1" Content="{Binding IdCustomer, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoLabel}"/>
+
+                        <Label Content="Дата реєстрації:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <DatePicker x:Name="registrationDateDatePicker" Grid.Column="1" Grid.Row="2" SelectedDate="{Binding RegistrationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseInfoDatePicker}" />
+
+                        <Label Content="Дата народження:" Grid.Column="0" Grid.Row="3" Style="{StaticResource BaseInfoLabel}" />
+                        <DatePicker x:Name="birthDateDatePicker" Grid.Column="1" Grid.Row="3" SelectedDate="{Binding BirthDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseInfoDatePicker}"/>
+
+                        <Label Content="Прізвище:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="surnameTextBox" Grid.Column="1" Grid.Row="4" Text="{Binding Surname, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}" />
+
+                        <Label Content="Ім'я:" Grid.Column="0" Grid.Row="5" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="nameTextBox" Grid.Column="1" Grid.Row="5" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="По батькові:" Grid.Column="0" Grid.Row="6" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="patronymicTextBox" Grid.Column="1" Grid.Row="6" Text="{Binding Patronymic, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoTextBox}"/>
+                    </Grid>
+
+                    <Grid x:Name="CustomerResidenceAddressInfoGrid" Grid.Row="0" Grid.Column="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Адреса" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+
+                        <Label Content="Місто:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="cityTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding City, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Вулиця:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <ComboBox x:Name="streetComboBox" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={StaticResource streetViewSource}}" DisplayMemberPath="Title" SelectedItem="{Binding Source={StaticResource customersViewSource}, Path=street}" Style="{StaticResource BaseInfoComboBox}" />
+
+                        <Label Content="Будинок:" Grid.Column="0"  Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="houseTextBox" Grid.Column="1" Grid.Row="3" Text="{Binding House, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Квартира:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="apartmentTextBox" Grid.Column="1"  Grid.Row="4" Text="{Binding Apartment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+                    </Grid>
+
+                    <Grid x:Name="CustomerContactInfoGrid" Grid.Row="0" Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Контактна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+
+                        <Label Content="Номер телефону:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="phonenumberTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding Phonenumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Пошта:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="emailTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Паспорт:" Grid.Column="0" Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="passportTextBox" Grid.Column="1" Grid.Row="3" Text="{Binding Passport, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Ідентифікаційний код:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="identificationTextBox" Grid.Column="1" Grid.Row="4" Text="{Binding Identification, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+                    </Grid>
+
+                    <Grid x:Name="CustomerElseInfoGrid" Grid.Row="0" Grid.Column="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Інше" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+
+                        <Label Content="Дата смерті:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <DatePicker x:Name="deathDateDatePicker" Grid.Column="1" Grid.Row="1" SelectedDate="{Binding DeathDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseInfoDatePicker}"/>
+
+                        <Label Content="Помер:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <CheckBox x:Name="liveStatusCheckBox" Grid.Column="1" Grid.Row="2" IsChecked="{Binding LiveStatus, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoCheckBox}"/>
+
+                        <Label Content="ОТГ:" Grid.Column="0" Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
+                        <CheckBox x:Name="otgStatusCheckBox" Grid.Column="1" Grid.Row="3" IsChecked="{Binding OtgStatus, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoCheckBox}"/>
+                    </Grid>
+                </Grid>
+
+                <Grid x:Name="newCustomerGrid" DataContext="{Binding newCustomer, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, UpdateSourceTrigger=Explicit}" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top" Visibility="Collapsed">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid x:Name="newCustomerPersonalInfoGrid" Grid.Row="0" Grid.Column="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Персональна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+
+                        <Label Content="ID:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <Label x:Name="add_idCustomerLabel" Grid.Column="1" Grid.Row="1" Content="{Binding IdCustomer, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoLabel}"/>
+
+                        <Label Content="Дата реєстрації:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <DatePicker x:Name="add_registrationDateDatePicker" Grid.Column="1" Grid.Row="2" SelectedDate="{Binding RegistrationDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseInfoDatePicker}" />
+
+                        <Label Content="Дата народження:" Grid.Column="0" Grid.Row="3" Style="{StaticResource BaseInfoLabel}" />
+                        <DatePicker x:Name="add_birthDateDatePicker" Grid.Column="1" Grid.Row="3" SelectedDate="{Binding BirthDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseInfoDatePicker}"/>
+
+                        <Label Content="Прізвище:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_surnameTextBox" Grid.Column="1" Grid.Row="4" Text="{Binding Surname, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}" />
+
+                        <Label Content="Ім'я:" Grid.Column="0" Grid.Row="5" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_nameTextBox" Grid.Column="1" Grid.Row="5" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="По батькові:" Grid.Column="0" Grid.Row="6" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_patronymicTextBox" Grid.Column="1" Grid.Row="6" Text="{Binding Patronymic, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoTextBox}"/>
+                    </Grid>
+
+                    <Grid x:Name="newCustomerResidenceAddressInfoGrid" Grid.Row="0" Grid.Column="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Адреса" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+
+                        <Label Content="Місто:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_cityTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding City, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Вулиця:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <ComboBox x:Name="add_streetComboBox" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={StaticResource streetViewSource}}" DisplayMemberPath="Title" Style="{StaticResource BaseInfoComboBox}"/>
+
+                        <Label Content="Будинок:" Grid.Column="0"  Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_houseTextBox" Grid.Column="1" Grid.Row="3" Text="{Binding House, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Квартира:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_apartmentTextBox" Grid.Column="1"  Grid.Row="4" Text="{Binding Apartment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+                    </Grid>
+
+                    <Grid x:Name="newCustomerContactInfoGrid" Grid.Row="0" Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Контактна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+                        
+                        <Label Content="Номер телефону:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_phonenumberTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding Phonenumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Пошта:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_emailTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Паспорт:" Grid.Column="0" Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_passportTextBox" Grid.Column="1" Grid.Row="3" Text="{Binding Passport, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Ідентифікаційний:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_identificationTextBox" Grid.Column="1" Grid.Row="4" Text="{Binding Identification, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+                    </Grid>
+
+                    <Grid x:Name="newCustomerElseInfoGrid" Grid.Row="0" Grid.Column="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Інше" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
+                        
+                        <Label Content="Дата смерті:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
+                        <DatePicker x:Name="add_deathDateDatePicker" Grid.Column="1" Grid.Row="1" SelectedDate="{Binding DeathDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseInfoDatePicker}"/>
+
+                        <Label Content="Помер:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
+                        <CheckBox x:Name="add_liveStatusCheckBox" Grid.Column="1" Grid.Row="2" IsChecked="{Binding LiveStatus, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoCheckBox}"/>
+
+                        <Label Content="ОТГ:" Grid.Column="0" Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
+                        <CheckBox x:Name="add_otgStatusCheckBox" Grid.Column="1" Grid.Row="3" IsChecked="{Binding OtgStatus, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoCheckBox}"/>
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Height="100" Name="customerSocialTypeGrid" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Content="Соціальні групи підопічного:" Style="{StaticResource HeaderLabel}"/>
+            <ListBox Grid.Column="0" Grid.Row="1" Name="customerSocialTypesList" ItemsSource="{Binding Source={StaticResource customercustomersocialtypesViewSource}}" DisplayMemberPath="socialtype.Title"/>
+            
+            <WrapPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="btnSelectSocialTypes" Content=" Добавити " Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource SelectSocialTypes}"/>
+                <Button Name="btnDeleteSocialTypes" Content=" Видалити " Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource DeleteSocialTypes}"/>
+            </WrapPanel>
+
+            <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" Content="Доступні соціальні групи:" Style="{StaticResource HeaderLabel}"/>
+            <ListBox Grid.Column="2" Grid.Row="1" Name="SocialTypesList" ItemsSource="{Binding Source={StaticResource socialTypesViewSource}}" DisplayMemberPath="Title"/>
+
+        </Grid>
+
+        <Grid Grid.Row="2" >
+            <StackPanel Orientation="Horizontal" Height="36"  Background="{StaticResource DarkBaseBrush}">
+                <Button Name="btnFirst" Content=" |◄ "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource FirstCommand}"/>
+                <Button Name="btnPrev" Content=" ◄ "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource PreviousCommand}"/>
+                <Button Name="btnNext" Content=" ► "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource NextCommand}"/>
+                <Button Name="btnLast" Content=" ►| "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource LastCommand}"/>
+                <Button Name="btnDelete" Content=" Видалити "   Style="{StaticResource BaseButtonStyle}" Command="{StaticResource DeleteCommand}"/>
+                <Button Name="btnUpdate" Content=" Зберегти "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource UpdateCommand}"/>
+                <Button Name="btnAdd" Content=" Новий запис "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource AddCommand}"/>
+                <Button Name="btnCancel" Content=" Очистити "  Style="{StaticResource BaseButtonStyle}" Command="{StaticResource CancelCommand}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="3" DataContext="{StaticResource customersViewSource}">
+            <DataGrid x:Name="customerDataGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" MouseDoubleClick="customerDataGrid_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="idCustomerColumn" Binding="{Binding IdCustomer}" Header="ID" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Ім'я" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="surnameColumn" Binding="{Binding Surname}" Header="Прізвище" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding Patronymic}" Header="По батькові" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="registrationdateColumn" Header="Дата реєстрації" Binding="{Binding RegistrationDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="birthdateColumn" Header="Дата народження" Binding="{Binding BirthDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
+
+
+                    <DataGridTextColumn x:Name="cityColumn" Binding="{Binding City}" Header="Місто" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="streetColumn" Binding="{Binding street.Title}" Header="Вулиця" IsReadOnly="True"/>
+
+                    <DataGridTextColumn x:Name="houseColumn" Binding="{Binding House}" Header="Бд" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="apartmentColumn" Binding="{Binding Apartment}" Header="Кв" IsReadOnly="True"/>
+
+                    <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email}" Header="Пошта" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="phonenumberColumn" Binding="{Binding Phonenumber}" Header="Номер телефону" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="passportColumn" Binding="{Binding Passport}" Header="Паспорт" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="identificationColumn" Binding="{Binding Identification}" Header="Ідентифікаційний код" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="pensionColumn" Binding="{Binding Pension}" Header="Пенсійне посвідчення" IsReadOnly="True"/>
+
+                    <DataGridCheckBoxColumn x:Name="otgStatusColumn" Binding="{Binding OtgStatus}" Header="ОТГ"  Width="SizeToHeader" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn x:Name="liveStatusColumn" Binding="{Binding LiveStatus}" Header="Помер" Width="SizeToHeader" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="deathdateColumn" Header="Дата смерті" Binding="{Binding DeathDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
+
+
+
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+    </Grid>
+</Page>

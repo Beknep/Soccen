@@ -1,0 +1,643 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище soccenModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bank">
+          <Key>
+            <PropertyRef Name="IdBank" />
+          </Key>
+          <Property Name="IdBank" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bankaccount">
+          <Key>
+            <PropertyRef Name="IdBankAccount" />
+          </Key>
+          <Property Name="IdBankAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankId" Type="int" />
+          <Property Name="CustomerId" Type="int" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="IdCustomer" />
+          </Key>
+          <Property Name="IdCustomer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Patronymic" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="House" Type="varchar" MaxLength="10" />
+          <Property Name="Apartment" Type="int" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="Passport" Type="varchar" MaxLength="20" />
+          <Property Name="Identification" Type="int" />
+          <Property Name="Pension" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="20" />
+          <Property Name="Phonenumber" Type="varchar" MaxLength="20" />
+          <Property Name="LiveStatus" Type="tinyint" />
+          <Property Name="OtgStatus" Type="tinyint" />
+          <Property Name="RegistrationDate" Type="date" Nullable="false" />
+          <Property Name="DeathDate" Type="date" />
+          <Property Name="StreetId" Type="int" />
+        </EntityType>
+        <EntityType Name="customersocialtype">
+          <Key>
+            <PropertyRef Name="IdCustomerSocialType" />
+          </Key>
+          <Property Name="IdCustomerSocialType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCustomer" Type="int" />
+          <Property Name="IdSocialType" Type="int" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="IdService" />
+          </Key>
+          <Property Name="IdService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="45" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="MoneyHelp" Type="int" />
+        </EntityType>
+        <EntityType Name="serviceexecution">
+          <Key>
+            <PropertyRef Name="IdServiceExecution" />
+          </Key>
+          <Property Name="IdServiceExecution" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="ServiceIdServiceExecution" Type="int" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <EntityType Name="servicesocialtype">
+          <Key>
+            <PropertyRef Name="IdServiceSocialType" />
+          </Key>
+          <Property Name="IdServiceSocialType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceIdSocialtype" Type="int" />
+          <Property Name="SocialTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="socialtype">
+          <Key>
+            <PropertyRef Name="IdSocialType" />
+          </Key>
+          <Property Name="IdSocialType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="45" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="street">
+          <Key>
+            <PropertyRef Name="IdStreet" />
+          </Key>
+          <Property Name="IdStreet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="BankBankAccount">
+          <End Role="bank" Type="Self.bank" Multiplicity="0..1" />
+          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="IdBank" />
+            </Principal>
+            <Dependent Role="bankaccount">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerBankAccount">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="IdCustomer" />
+            </Principal>
+            <Dependent Role="bankaccount">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerSocialType1">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="customersocialtype" Type="Self.customersocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="IdCustomer" />
+            </Principal>
+            <Dependent Role="customersocialtype">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IdStreet">
+          <End Role="street" Type="Self.street" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="street">
+              <PropertyRef Name="IdStreet" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="StreetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ServiceExecutionCustomer">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="serviceexecution" Type="Self.serviceexecution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="IdCustomer" />
+            </Principal>
+            <Dependent Role="serviceexecution">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ServiceExecutionService">
+          <End Role="service" Type="Self.service" Multiplicity="0..1" />
+          <End Role="serviceexecution" Type="Self.serviceexecution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="IdService" />
+            </Principal>
+            <Dependent Role="serviceexecution">
+              <PropertyRef Name="ServiceIdServiceExecution" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ServiceSocialType1">
+          <End Role="service" Type="Self.service" Multiplicity="0..1" />
+          <End Role="servicesocialtype" Type="Self.servicesocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="IdService" />
+            </Principal>
+            <Dependent Role="servicesocialtype">
+              <PropertyRef Name="ServiceIdSocialtype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SocialTypeCustomer">
+          <End Role="socialtype" Type="Self.socialtype" Multiplicity="0..1" />
+          <End Role="customersocialtype" Type="Self.customersocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="socialtype">
+              <PropertyRef Name="IdSocialType" />
+            </Principal>
+            <Dependent Role="customersocialtype">
+              <PropertyRef Name="IdSocialType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SocialTypeService">
+          <End Role="socialtype" Type="Self.socialtype" Multiplicity="0..1" />
+          <End Role="servicesocialtype" Type="Self.servicesocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="socialtype">
+              <PropertyRef Name="IdSocialType" />
+            </Principal>
+            <Dependent Role="servicesocialtype">
+              <PropertyRef Name="SocialTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище soccenModelContainer">
+          <EntitySet Name="bank" EntityType="Self.bank" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="bankaccount" EntityType="Self.bankaccount" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="customersocialtype" EntityType="Self.customersocialtype" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="service" EntityType="Self.service" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="serviceexecution" EntityType="Self.serviceexecution" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="servicesocialtype" EntityType="Self.servicesocialtype" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="socialtype" EntityType="Self.socialtype" Schema="soccen" store:Type="Tables" />
+          <EntitySet Name="street" EntityType="Self.street" Schema="soccen" store:Type="Tables" />
+          <AssociationSet Name="BankBankAccount" Association="Self.BankBankAccount">
+            <End Role="bank" EntitySet="bank" />
+            <End Role="bankaccount" EntitySet="bankaccount" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerBankAccount" Association="Self.CustomerBankAccount">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="bankaccount" EntitySet="bankaccount" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerSocialType1" Association="Self.CustomerSocialType1">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="customersocialtype" EntitySet="customersocialtype" />
+          </AssociationSet>
+          <AssociationSet Name="IdStreet" Association="Self.IdStreet">
+            <End Role="street" EntitySet="street" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="ServiceExecutionCustomer" Association="Self.ServiceExecutionCustomer">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="serviceexecution" EntitySet="serviceexecution" />
+          </AssociationSet>
+          <AssociationSet Name="ServiceExecutionService" Association="Self.ServiceExecutionService">
+            <End Role="service" EntitySet="service" />
+            <End Role="serviceexecution" EntitySet="serviceexecution" />
+          </AssociationSet>
+          <AssociationSet Name="ServiceSocialType1" Association="Self.ServiceSocialType1">
+            <End Role="service" EntitySet="service" />
+            <End Role="servicesocialtype" EntitySet="servicesocialtype" />
+          </AssociationSet>
+          <AssociationSet Name="SocialTypeCustomer" Association="Self.SocialTypeCustomer">
+            <End Role="socialtype" EntitySet="socialtype" />
+            <End Role="customersocialtype" EntitySet="customersocialtype" />
+          </AssociationSet>
+          <AssociationSet Name="SocialTypeService" Association="Self.SocialTypeService">
+            <End Role="socialtype" EntitySet="socialtype" />
+            <End Role="servicesocialtype" EntitySet="servicesocialtype" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="soccenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bank">
+          <Key>
+            <PropertyRef Name="IdBank" />
+          </Key>
+          <Property Name="IdBank" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="bankaccounts" Relationship="Self.BankBankAccount" FromRole="bank" ToRole="bankaccount" />
+        </EntityType>
+        <EntityType Name="bankaccount">
+          <Key>
+            <PropertyRef Name="IdBankAccount" />
+          </Key>
+          <Property Name="IdBankAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankId" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" />
+          <NavigationProperty Name="bank" Relationship="Self.BankBankAccount" FromRole="bankaccount" ToRole="bank" />
+          <NavigationProperty Name="customer" Relationship="Self.CustomerBankAccount" FromRole="bankaccount" ToRole="customer" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="IdCustomer" />
+          </Key>
+          <Property Name="IdCustomer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="House" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Apartment" Type="Int32" />
+          <Property Name="BirthDate" Type="DateTime" />
+          <Property Name="Passport" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Identification" Type="Int32" />
+          <Property Name="Pension" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Phonenumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LiveStatus" Type="SByte" />
+          <Property Name="OtgStatus" Type="SByte" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" />
+          <Property Name="DeathDate" Type="DateTime" />
+          <Property Name="StreetId" Type="Int32" />
+          <NavigationProperty Name="bankaccounts" Relationship="Self.CustomerBankAccount" FromRole="customer" ToRole="bankaccount" />
+          <NavigationProperty Name="customersocialtypes" Relationship="Self.CustomerSocialType1" FromRole="customer" ToRole="customersocialtype" />
+          <NavigationProperty Name="street" Relationship="Self.IdStreet" FromRole="customer" ToRole="street" />
+          <NavigationProperty Name="serviceexecutions" Relationship="Self.ServiceExecutionCustomer" FromRole="customer" ToRole="serviceexecution" />
+        </EntityType>
+        <EntityType Name="customersocialtype">
+          <Key>
+            <PropertyRef Name="IdCustomerSocialType" />
+          </Key>
+          <Property Name="IdCustomerSocialType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCustomer" Type="Int32" />
+          <Property Name="IdSocialType" Type="Int32" />
+          <NavigationProperty Name="customer" Relationship="Self.CustomerSocialType1" FromRole="customersocialtype" ToRole="customer" />
+          <NavigationProperty Name="socialtype" Relationship="Self.SocialTypeCustomer" FromRole="customersocialtype" ToRole="socialtype" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="IdService" />
+          </Key>
+          <Property Name="IdService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MoneyHelp" Type="Int32" />
+          <NavigationProperty Name="serviceexecutions" Relationship="Self.ServiceExecutionService" FromRole="service" ToRole="serviceexecution" />
+          <NavigationProperty Name="servicesocialtypes" Relationship="Self.ServiceSocialType1" FromRole="service" ToRole="servicesocialtype" />
+        </EntityType>
+        <EntityType Name="serviceexecution">
+          <Key>
+            <PropertyRef Name="IdServiceExecution" />
+          </Key>
+          <Property Name="IdServiceExecution" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="ServiceIdServiceExecution" Type="Int32" />
+          <Property Name="Status" Type="SByte" />
+          <Property Name="Date" Type="DateTime" />
+          <NavigationProperty Name="customer" Relationship="Self.ServiceExecutionCustomer" FromRole="serviceexecution" ToRole="customer" />
+          <NavigationProperty Name="service" Relationship="Self.ServiceExecutionService" FromRole="serviceexecution" ToRole="service" />
+        </EntityType>
+        <EntityType Name="servicesocialtype">
+          <Key>
+            <PropertyRef Name="IdServiceSocialType" />
+          </Key>
+          <Property Name="IdServiceSocialType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceIdSocialtype" Type="Int32" />
+          <Property Name="SocialTypeId" Type="Int32" />
+          <NavigationProperty Name="service" Relationship="Self.ServiceSocialType1" FromRole="servicesocialtype" ToRole="service" />
+          <NavigationProperty Name="socialtype" Relationship="Self.SocialTypeService" FromRole="servicesocialtype" ToRole="socialtype" />
+        </EntityType>
+        <EntityType Name="socialtype">
+          <Key>
+            <PropertyRef Name="IdSocialType" />
+          </Key>
+          <Property Name="IdSocialType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customersocialtypes" Relationship="Self.SocialTypeCustomer" FromRole="socialtype" ToRole="customersocialtype" />
+          <NavigationProperty Name="servicesocialtypes" Relationship="Self.SocialTypeService" FromRole="socialtype" ToRole="servicesocialtype" />
+        </EntityType>
+        <EntityType Name="street">
+          <Key>
+            <PropertyRef Name="IdStreet" />
+          </Key>
+          <Property Name="IdStreet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customers" Relationship="Self.IdStreet" FromRole="street" ToRole="customer" />
+        </EntityType>
+        <Association Name="BankBankAccount">
+          <End Role="bank" Type="Self.bank" Multiplicity="0..1" />
+          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="IdBank" />
+            </Principal>
+            <Dependent Role="bankaccount">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerBankAccount">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="IdCustomer" />
+            </Principal>
+            <Dependent Role="bankaccount">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerSocialType1">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="customersocialtype" Type="Self.customersocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="IdCustomer" />
+            </Principal>
+            <Dependent Role="customersocialtype">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IdStreet">
+          <End Role="street" Type="Self.street" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="street">
+              <PropertyRef Name="IdStreet" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="StreetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ServiceExecutionCustomer">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="serviceexecution" Type="Self.serviceexecution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="IdCustomer" />
+            </Principal>
+            <Dependent Role="serviceexecution">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SocialTypeCustomer">
+          <End Role="socialtype" Type="Self.socialtype" Multiplicity="0..1" />
+          <End Role="customersocialtype" Type="Self.customersocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="socialtype">
+              <PropertyRef Name="IdSocialType" />
+            </Principal>
+            <Dependent Role="customersocialtype">
+              <PropertyRef Name="IdSocialType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ServiceExecutionService">
+          <End Role="service" Type="Self.service" Multiplicity="0..1" />
+          <End Role="serviceexecution" Type="Self.serviceexecution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="IdService" />
+            </Principal>
+            <Dependent Role="serviceexecution">
+              <PropertyRef Name="ServiceIdServiceExecution" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ServiceSocialType1">
+          <End Role="service" Type="Self.service" Multiplicity="0..1" />
+          <End Role="servicesocialtype" Type="Self.servicesocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="IdService" />
+            </Principal>
+            <Dependent Role="servicesocialtype">
+              <PropertyRef Name="ServiceIdSocialtype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SocialTypeService">
+          <End Role="socialtype" Type="Self.socialtype" Multiplicity="0..1" />
+          <End Role="servicesocialtype" Type="Self.servicesocialtype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="socialtype">
+              <PropertyRef Name="IdSocialType" />
+            </Principal>
+            <Dependent Role="servicesocialtype">
+              <PropertyRef Name="SocialTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="soccenEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="banks" EntityType="Self.bank" />
+          <EntitySet Name="bankaccounts" EntityType="Self.bankaccount" />
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="customersocialtypes" EntityType="Self.customersocialtype" />
+          <EntitySet Name="services" EntityType="Self.service" />
+          <EntitySet Name="serviceexecutions" EntityType="Self.serviceexecution" />
+          <EntitySet Name="servicesocialtypes" EntityType="Self.servicesocialtype" />
+          <EntitySet Name="socialtypes" EntityType="Self.socialtype" />
+          <EntitySet Name="streets" EntityType="Self.street" />
+          <AssociationSet Name="BankBankAccount" Association="Self.BankBankAccount">
+            <End Role="bank" EntitySet="banks" />
+            <End Role="bankaccount" EntitySet="bankaccounts" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerBankAccount" Association="Self.CustomerBankAccount">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="bankaccount" EntitySet="bankaccounts" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerSocialType1" Association="Self.CustomerSocialType1">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="customersocialtype" EntitySet="customersocialtypes" />
+          </AssociationSet>
+          <AssociationSet Name="IdStreet" Association="Self.IdStreet">
+            <End Role="street" EntitySet="streets" />
+            <End Role="customer" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="ServiceExecutionCustomer" Association="Self.ServiceExecutionCustomer">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="serviceexecution" EntitySet="serviceexecutions" />
+          </AssociationSet>
+          <AssociationSet Name="SocialTypeCustomer" Association="Self.SocialTypeCustomer">
+            <End Role="socialtype" EntitySet="socialtypes" />
+            <End Role="customersocialtype" EntitySet="customersocialtypes" />
+          </AssociationSet>
+          <AssociationSet Name="ServiceExecutionService" Association="Self.ServiceExecutionService">
+            <End Role="service" EntitySet="services" />
+            <End Role="serviceexecution" EntitySet="serviceexecutions" />
+          </AssociationSet>
+          <AssociationSet Name="ServiceSocialType1" Association="Self.ServiceSocialType1">
+            <End Role="service" EntitySet="services" />
+            <End Role="servicesocialtype" EntitySet="servicesocialtypes" />
+          </AssociationSet>
+          <AssociationSet Name="SocialTypeService" Association="Self.SocialTypeService">
+            <End Role="socialtype" EntitySet="socialtypes" />
+            <End Role="servicesocialtype" EntitySet="servicesocialtypes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище soccenModelContainer" CdmEntityContainer="soccenEntities">
+          <EntitySetMapping Name="banks">
+            <EntityTypeMapping TypeName="soccenModel.bank">
+              <MappingFragment StoreEntitySet="bank">
+                <ScalarProperty Name="IdBank" ColumnName="IdBank" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bankaccounts">
+            <EntityTypeMapping TypeName="soccenModel.bankaccount">
+              <MappingFragment StoreEntitySet="bankaccount">
+                <ScalarProperty Name="IdBankAccount" ColumnName="IdBankAccount" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="soccenModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="Apartment" ColumnName="Apartment" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Passport" ColumnName="Passport" />
+                <ScalarProperty Name="Identification" ColumnName="Identification" />
+                <ScalarProperty Name="Pension" ColumnName="Pension" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phonenumber" ColumnName="Phonenumber" />
+                <ScalarProperty Name="LiveStatus" ColumnName="LiveStatus" />
+                <ScalarProperty Name="OtgStatus" ColumnName="OtgStatus" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="DeathDate" ColumnName="DeathDate" />
+                <ScalarProperty Name="StreetId" ColumnName="StreetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customersocialtypes">
+            <EntityTypeMapping TypeName="soccenModel.customersocialtype">
+              <MappingFragment StoreEntitySet="customersocialtype">
+                <ScalarProperty Name="IdCustomerSocialType" ColumnName="IdCustomerSocialType" />
+                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
+                <ScalarProperty Name="IdSocialType" ColumnName="IdSocialType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="services">
+            <EntityTypeMapping TypeName="soccenModel.service">
+              <MappingFragment StoreEntitySet="service">
+                <ScalarProperty Name="IdService" ColumnName="IdService" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MoneyHelp" ColumnName="MoneyHelp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="serviceexecutions">
+            <EntityTypeMapping TypeName="soccenModel.serviceexecution">
+              <MappingFragment StoreEntitySet="serviceexecution">
+                <ScalarProperty Name="IdServiceExecution" ColumnName="IdServiceExecution" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ServiceIdServiceExecution" ColumnName="ServiceIdServiceExecution" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="servicesocialtypes">
+            <EntityTypeMapping TypeName="soccenModel.servicesocialtype">
+              <MappingFragment StoreEntitySet="servicesocialtype">
+                <ScalarProperty Name="IdServiceSocialType" ColumnName="IdServiceSocialType" />
+                <ScalarProperty Name="ServiceIdSocialtype" ColumnName="ServiceIdSocialtype" />
+                <ScalarProperty Name="SocialTypeId" ColumnName="SocialTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="socialtypes">
+            <EntityTypeMapping TypeName="soccenModel.socialtype">
+              <MappingFragment StoreEntitySet="socialtype">
+                <ScalarProperty Name="IdSocialType" ColumnName="IdSocialType" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="streets">
+            <EntityTypeMapping TypeName="soccenModel.street">
+              <MappingFragment StoreEntitySet="street">
+                <ScalarProperty Name="IdStreet" ColumnName="IdStreet" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
