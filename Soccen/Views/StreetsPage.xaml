@@ -34,7 +34,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="existingStreetGrid"  HorizontalAlignment="Left" Visibility="Visible" VerticalAlignment="Top" DataContext="{StaticResource streetsViewSource}" Grid.Row="0">
@@ -81,15 +81,15 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <DataGrid x:Name="streetDataGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" MouseDoubleClick="streetDataGrid_MouseDoubleClick">
+            <DataGrid x:Name="streetDataGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" MouseDoubleClick="streetDataGrid_MouseDoubleClick" MaxHeight="1080">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="idStreetColumn" Binding="{Binding IdStreet}" Header="ID" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="titleColumn" Binding="{Binding Title}" Header="Назва" IsReadOnly="False"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-
         
+
 
     </Grid>
 </Page>

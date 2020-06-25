@@ -80,7 +80,7 @@ namespace Soccen.Views
         {
             if (newStreetGrid.IsVisible)
             {
-
+                
                 street newStreet = new street
                 {
                     Title = add_titleTextBox.Text,
@@ -100,6 +100,7 @@ namespace Soccen.Views
         
         private void AddCommandHandler(object sender, RoutedEventArgs e)
         {
+            add_titleTextBox.Text = "";
             newStreetGrid.Visibility = Visibility.Visible;
             existingStreetGrid.Visibility = Visibility.Collapsed;
         }

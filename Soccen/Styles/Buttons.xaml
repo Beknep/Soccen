@@ -87,6 +87,9 @@
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource MediumBaseBrush}" />
                         </Trigger>
+                        <Trigger Property="IsMouseCaptured" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource MediumBaseBrush}" />
+                        </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource MediumBaseBrush}" />
                         </Trigger>

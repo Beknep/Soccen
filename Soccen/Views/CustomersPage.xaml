@@ -25,6 +25,7 @@
         <RoutedUICommand x:Key="SelectSocialTypes" Text="SelectSocialTypes"/>
         <RoutedUICommand x:Key="DeleteSocialTypes" Text="DeleteSocialTypes"/>
         <CollectionViewSource x:Key="customercustomersocialtypesViewSource" Source="{Binding customersocialtypes, Source={StaticResource customersViewSource}}"/>
+        
     </Page.Resources>
 
     <Page.CommandBindings>
@@ -190,6 +191,8 @@
                         <Label Content="ОТГ:" Grid.Column="0" Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
                         <CheckBox x:Name="otgStatusCheckBox" Grid.Column="1" Grid.Row="3" IsChecked="{Binding OtgStatus, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoCheckBox}"/>
                     </Grid>
+
+                    
                 </Grid>
 
                 <Grid x:Name="newCustomerGrid" DataContext="{Binding newCustomer, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, UpdateSourceTrigger=Explicit}" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top" Visibility="Collapsed">
@@ -372,7 +375,7 @@
         </Grid>
 
         <Grid Grid.Row="3" DataContext="{StaticResource customersViewSource}">
-            <DataGrid x:Name="customerDataGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" MouseDoubleClick="customerDataGrid_MouseDoubleClick">
+            <DataGrid x:Name="customerDataGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" MouseDoubleClick="customerDataGrid_MouseDoubleClick" >
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="idCustomerColumn" Binding="{Binding IdCustomer}" Header="ID" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Ім'я" IsReadOnly="True"/>

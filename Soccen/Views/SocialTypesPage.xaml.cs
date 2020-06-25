@@ -57,26 +57,39 @@ namespace Soccen.Views
 
         private void DeleteCommandHandler(object sender, RoutedEventArgs e)
         {
-            try
+
+            if (MessageBox.Show("Ви точно хочете видалити запис?", "Підтвердження",
+            MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                var cur = socialTypeViewSource.View.CurrentItem as socialtype;
-
-                var soc = (from sc in context.socialtypes
-                          where sc.IdSocialType == cur.IdSocialType
-                          select sc).FirstOrDefault();
-
-                if (soc != null)
+                try
                 {
-                    context.socialtypes.Remove(soc);
-                }
+                    var cur = socialTypeViewSource.View.CurrentItem as socialtype;
 
-                MessageBox.Show("Видалення відбулося успішно!");
-                context.SaveChanges();
-                socialTypeViewSource.View.Refresh();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Щойно відбувся оброблений виняток: " + ex.Message, "Помилка", MessageBoxButton.OK);
+                    var soc = (from sc in context.socialtypes
+                               where sc.IdSocialType == cur.IdSocialType
+                               select sc).FirstOrDefault();
+
+                    if (soc != null)
+                    {
+                        context.socialtypes.Remove(soc);
+                        foreach (servicesocialtype var in soc.servicesocialtypes)
+                        {
+                            context.servicesocialtypes.Remove(var);
+                        }
+                        foreach (customersocialtype var in soc.customersocialtypes)
+                        {
+                            context.customersocialtypes.Remove(var);
+                        }
+                    }
+
+                    MessageBox.Show("Видалення відбулося успішно!");
+                    context.SaveChanges();
+                    socialTypeViewSource.View.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Щойно відбувся оброблений виняток: " + ex.Message, "Помилка", MessageBoxButton.OK);
+                }
             }
 
         }
@@ -84,30 +97,37 @@ namespace Soccen.Views
 
         private void UpdateCommandHandler(object sender, RoutedEventArgs e)
         {
-            if (newSocialTypeGrid.IsVisible)
+
+            if (MessageBox.Show("Ви точно хочете зберегти запис?", "Підтвердження",
+    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-
-                socialtype newSocialTypes = new socialtype
+                if (newSocialTypeGrid.IsVisible)
                 {
-                    Title = add_titleTextBox.Text.Trim(),
-                    Description = add_descriptionTextBox.Text.Trim()
-                };
-                context.socialtypes.Local.Insert(0, newSocialTypes);
+
+                    socialtype newSocialTypes = new socialtype
+                    {
+                        Title = add_titleTextBox.Text.Trim(),
+                        Description = add_descriptionTextBox.Text.Trim()
+                    };
+                    context.socialtypes.Local.Insert(0, newSocialTypes);
+                    socialTypeViewSource.View.Refresh();
+                    socialTypeViewSource.View.MoveCurrentTo(newSocialTypes);
+                    newSocialTypeGrid.Visibility = Visibility.Collapsed; 
+                    SocialTypeServiceGrid.Visibility = Visibility.Visible;
+                    existingSocialTypeGrid.Visibility = Visibility.Visible;
+
+                }
+
+                context.SaveChanges();
                 socialTypeViewSource.View.Refresh();
-                socialTypeViewSource.View.MoveCurrentTo(newSocialTypes);
-                newSocialTypeGrid.Visibility = Visibility.Collapsed;
-                existingSocialTypeGrid.Visibility = Visibility.Visible;
-
             }
-
-            context.SaveChanges();
-            socialTypeViewSource.View.Refresh();
         }
 
 
         private void AddCommandHandler(object sender, RoutedEventArgs e)
         {
             newSocialTypeGrid.Visibility = Visibility.Visible;
+            SocialTypeServiceGrid.Visibility = Visibility.Collapsed;
             existingSocialTypeGrid.Visibility = Visibility.Collapsed;
 
             add_titleTextBox.Text = "";
@@ -124,6 +144,7 @@ namespace Soccen.Views
         {
             existingSocialTypeGrid.Visibility = Visibility.Visible;
             newSocialTypeGrid.Visibility = Visibility.Collapsed;
+            SocialTypeServiceGrid.Visibility = Visibility.Visible;
         }
 
         private void SelectServiceCommandHandler(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)

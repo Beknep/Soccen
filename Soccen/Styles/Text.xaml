@@ -95,7 +95,7 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="3"/>
-        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="MinWidth" Value="200"/>
         <Setter Property="Width" Value="auto"/>
         <Setter Property="Height" Value="auto"/>
         <Setter Property="FontFamily" Value= "Arial"/>

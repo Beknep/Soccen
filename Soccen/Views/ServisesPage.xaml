@@ -102,6 +102,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="idServiceColumn" Binding="{Binding IdService}" Header="ID" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="titleColumn" Binding="{Binding Title}" Header="Назва" IsReadOnly="False"/>
+                    <DataGridTextColumn x:Name="moneyHelpColumn" Binding="{Binding MoneyHelp}" Header="Грошова допомога" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="descriptionColumn" Binding="{Binding Description}"  Header="Опис"  IsReadOnly="False" />
                 </DataGrid.Columns>
             </DataGrid>

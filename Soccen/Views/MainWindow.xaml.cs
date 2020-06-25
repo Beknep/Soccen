@@ -71,6 +71,7 @@ namespace Soccen
         {
             Uri myUri = new Uri("StreetsPage.xaml", UriKind.Relative);
             MainFrame.Source = myUri;
+            
         }
 
         private void CustomersPageButton_Click(object sender, RoutedEventArgs e)

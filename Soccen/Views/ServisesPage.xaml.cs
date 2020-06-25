@@ -50,61 +50,81 @@ namespace Soccen.Views
 
         private void DeleteCommandHandler(object sender, RoutedEventArgs e)
         {
-            try
+            if (MessageBox.Show("Ви точно хочете видалити запис?", "Підтвердження",
+    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                var cur = serviceViewSource.View.CurrentItem as service;
-
-                var ser = (from sr in context.services
-                           where sr.IdService == cur.IdService
-                           select sr).FirstOrDefault();
-
-                if (ser != null)
+                try
                 {
-                    context.services.Remove(ser);
-                }
+                    var cur = serviceViewSource.View.CurrentItem as service;
 
-                MessageBox.Show("Видалення відбулося успішно!");
-                context.SaveChanges();
-                serviceViewSource.View.Refresh();
+                    var ser = (from sr in context.services
+                               where sr.IdService == cur.IdService
+                               select sr).FirstOrDefault();
+
+                    if (ser != null)
+                    {
+                        context.services.Remove(ser);
+                        foreach (servicesocialtype var in ser.servicesocialtypes)
+                        {
+                            context.servicesocialtypes.Remove(var);
+                        }
+                        foreach (serviceexecution var in ser.serviceexecutions)
+                        {
+                            context.serviceexecutions.Remove(var);
+                        }
+                    }
+
+                    context.SaveChanges();
+                    serviceViewSource.View.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Щойно відбувся оброблений виняток: " + ex.Message, "Помилка", MessageBoxButton.OK);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Щойно відбувся оброблений виняток: " + ex.Message, "Помилка", MessageBoxButton.OK);
-            }
+            
 
         }
 
 
         private void UpdateCommandHandler(object sender, RoutedEventArgs e)
         {
-            if (newServiceGrid.IsVisible)
+            if (MessageBox.Show("Ви точно хочете зберегти запис?", "Підтвердження",
+    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-
-                service newService = new service
+                if (newServiceGrid.IsVisible)
                 {
-                    Title = add_titleTextBox.Text.Trim(),
-                    Description = add_descriptionTextBox.Text.Trim()
+
+                    service newService = new service
+                    {
+                        Title = add_titleTextBox.Text.Trim(),
+                        Description = add_descriptionTextBox.Text.Trim()
+
+                    };
+                    if(add_moneyHelpTextBox.Text != "")
+                    {
+                        try
+                        {
+                            newService.MoneyHelp = Int32.Parse((string)add_moneyHelpTextBox.Text.Trim());
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Грошова допомога має складатися з цифр!");
+                            return;
+                        }
+                    }
                     
-                };
-                try
-                {
-                    newService.MoneyHelp = Int32.Parse((string)add_moneyHelpTextBox.Text.Trim());
+                    context.services.Local.Insert(0, newService);
+                    serviceViewSource.View.Refresh();
+                    serviceViewSource.View.MoveCurrentTo(newService);
+                    newServiceGrid.Visibility = Visibility.Collapsed;
+                    existingServiceGrid.Visibility = Visibility.Visible;
+
                 }
-                catch
-                {
-                    MessageBox.Show("Грошова допомога має складатися з цифр!");
-                    return;
-                }
-                context.services.Local.Insert(0, newService);
+
+                context.SaveChanges();
                 serviceViewSource.View.Refresh();
-                serviceViewSource.View.MoveCurrentTo(newService);
-                newServiceGrid.Visibility = Visibility.Collapsed;
-                existingServiceGrid.Visibility = Visibility.Visible;
-
             }
-
-            context.SaveChanges();
-            serviceViewSource.View.Refresh();
         }
 
 

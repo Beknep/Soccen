@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="../Images/Logo.png" MinHeight="800" MinWidth="1225" >
+        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="../Images/Logo.png" MinHeight="500" MinWidth="1225" >
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
