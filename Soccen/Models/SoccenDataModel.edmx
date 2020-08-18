@@ -286,7 +286,7 @@
           <Property Name="Passport" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Identification" Type="Int32" />
           <Property Name="Pension" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Phonenumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LiveStatus" Type="SByte" />
           <Property Name="OtgStatus" Type="SByte" />
