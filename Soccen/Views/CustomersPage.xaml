@@ -86,6 +86,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <Label Content="Персональна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
@@ -107,6 +108,9 @@
 
                         <Label Content="По батькові:" Grid.Column="0" Grid.Row="6" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="patronymicTextBox" Grid.Column="1" Grid.Row="6" Text="{Binding Patronymic, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Жінка:" Grid.Column="0" Grid.Row="7" Style="{StaticResource BaseInfoLabel}"/>
+                        <CheckBox x:Name="GenderCheckBox" Grid.Column="1" Grid.Row="7" IsChecked="{Binding Gender, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoCheckBox}"/>
                     </Grid>
 
                     <Grid x:Name="CustomerResidenceAddressInfoGrid" Grid.Row="0" Grid.Column="1" >
@@ -383,7 +387,7 @@
                     <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding Patronymic}" Header="По батькові" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="registrationdateColumn" Header="Дата реєстрації" Binding="{Binding RegistrationDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="birthdateColumn" Header="Дата народження" Binding="{Binding BirthDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
-
+                    <DataGridCheckBoxColumn x:Name="GenderColumn" Binding="{Binding Gender}" Header="Жінка" Width="SizeToHeader" IsReadOnly="True"/>
 
                     <DataGridTextColumn x:Name="cityColumn" Binding="{Binding City}" Header="Місто" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="streetColumn" Binding="{Binding street.Title}" Header="Вулиця" IsReadOnly="True"/>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище soccenModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище soccenModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="bank">
           <Key>
             <PropertyRef Name="IdBank" />
@@ -35,13 +35,14 @@
           <Property Name="Passport" Type="varchar" MaxLength="20" />
           <Property Name="Identification" Type="int" />
           <Property Name="Pension" Type="varchar" MaxLength="20" />
-          <Property Name="Email" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="40" />
           <Property Name="Phonenumber" Type="varchar" MaxLength="20" />
           <Property Name="LiveStatus" Type="tinyint" />
           <Property Name="OtgStatus" Type="tinyint" />
           <Property Name="RegistrationDate" Type="date" Nullable="false" />
           <Property Name="DeathDate" Type="date" />
           <Property Name="StreetId" Type="int" />
+          <Property Name="Gender" Type="tinyint" />
         </EntityType>
         <EntityType Name="customersocialtype">
           <Key>
@@ -69,6 +70,7 @@
           <Property Name="ServiceIdServiceExecution" Type="int" />
           <Property Name="Status" Type="tinyint" />
           <Property Name="Date" Type="date" />
+          <Property Name="PayOrFree" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="servicesocialtype">
           <Key>
@@ -248,8 +250,7 @@
             <End Role="servicesocialtype" EntitySet="servicesocialtype" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="soccenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -297,6 +298,7 @@
           <NavigationProperty Name="customersocialtypes" Relationship="Self.CustomerSocialType1" FromRole="customer" ToRole="customersocialtype" />
           <NavigationProperty Name="street" Relationship="Self.IdStreet" FromRole="customer" ToRole="street" />
           <NavigationProperty Name="serviceexecutions" Relationship="Self.ServiceExecutionCustomer" FromRole="customer" ToRole="serviceexecution" />
+          <Property Name="Gender" Type="SByte" />
         </EntityType>
         <EntityType Name="customersocialtype">
           <Key>
@@ -330,6 +332,7 @@
           <Property Name="Date" Type="DateTime" />
           <NavigationProperty Name="customer" Relationship="Self.ServiceExecutionCustomer" FromRole="serviceexecution" ToRole="customer" />
           <NavigationProperty Name="service" Relationship="Self.ServiceExecutionService" FromRole="serviceexecution" ToRole="service" />
+          <Property Name="PayOrFree" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="servicesocialtype">
           <Key>
@@ -540,6 +543,7 @@
           <EntitySetMapping Name="customers">
             <EntityTypeMapping TypeName="soccenModel.customer">
               <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -583,6 +587,7 @@
           <EntitySetMapping Name="serviceexecutions">
             <EntityTypeMapping TypeName="soccenModel.serviceexecution">
               <MappingFragment StoreEntitySet="serviceexecution">
+                <ScalarProperty Name="PayOrFree" ColumnName="PayOrFree" />
                 <ScalarProperty Name="IdServiceExecution" ColumnName="IdServiceExecution" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ServiceIdServiceExecution" ColumnName="ServiceIdServiceExecution" />

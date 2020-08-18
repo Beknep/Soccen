@@ -19,6 +19,7 @@ namespace Soccen.Models
         public Nullable<int> ServiceIdServiceExecution { get; set; }
         public Nullable<sbyte> Status { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public string PayOrFree { get; set; }
     
         public virtual customer customer { get; set; }
         public virtual service service { get; set; }
