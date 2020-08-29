@@ -1,0 +1,69 @@
+﻿<Page x:Class="Soccen.Views.ServiceExecutionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:Models="clr-namespace:Soccen.Models"
+      xmlns:local="clr-namespace:Soccen.Views"
+      mc:Ignorable="d" 
+      Title="CustomersPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="serviceexecutionViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:serviceexecution}, CreateList=True}"/>
+        <CollectionViewSource x:Key="servicesViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:service}, CreateList=True}"/>
+        <RoutedUICommand x:Key="SaveCommand" Text="Save"/>
+        <RoutedUICommand x:Key="FirstCommand" Text="First"/>
+        <RoutedUICommand x:Key="LastCommand" Text="Last"/>
+        <RoutedUICommand x:Key="NextCommand" Text="Next"/>
+        <RoutedUICommand x:Key="PreviousCommand" Text="Previous"/>
+    </Page.Resources>
+
+    <Page.CommandBindings>
+        <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveComandHandler"/>
+        <CommandBinding Command="{StaticResource FirstCommand}" Executed="FirstCommandHandler"/>
+        <CommandBinding Command="{StaticResource LastCommand}" Executed="LastCommandHandler"/>
+        <CommandBinding Command="{StaticResource NextCommand}" Executed="NextCommandHandler"/>
+        <CommandBinding Command="{StaticResource PreviousCommand}" Executed="PreviousCommandHandler"/>
+    </Page.CommandBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ComboBox x:Name="serviceComboBox" Style="{StaticResource BaseInfoComboBox}" ItemsSource="{Binding Source={StaticResource servicesViewSource}}" DisplayMemberPath="Title" />
+
+            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerCalendar.DateFormat="MMM-yyyy" Text="MMM-yyyy"/>
+
+            <Button x:Name="exelButton" Content="Створити звіт" Style="{StaticResource ListControlButtonStyle}" Margin="0,5,5,5" Width="auto" Height="30" Padding="5,0,5,0"/>
+
+            <Button x:Name="saveButton" Content="Зберегти зміни" Style="{StaticResource ListControlButtonStyle}" Margin="0,5,5,5" Width="auto" Height="30" Padding="5,0,5,0" />
+
+            <Button Name="btnFirst" Content=" |◄ "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource FirstCommand}"/>
+            
+            <Button Name="btnPrev" Content=" ◄ "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource PreviousCommand}"/>
+            
+            <Button Name="btnNext" Content=" ► "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource NextCommand}"/>
+            
+            <Button Name="btnLast" Content=" ►| "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource LastCommand}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" DataContext="{StaticResource serviceexecutionViewSource}">
+            <DataGrid x:Name="serviceExecutionGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="numberColumn" Header="#" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConvertor}}" />
+                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding customer.Name}" Header="Ім'я" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="surnameColumn" Binding="{Binding customer.Surname}" Header="Прізвище" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding customer.Patronymic}" Header="По батькові" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn x:Name="genderColumn" Binding="{Binding customer.Gender}" Header="Стать" IsReadOnly="True" />
+                    <DataGridCheckBoxColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Виконання"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        
+        
+        
+    </Grid>
+</Page>
