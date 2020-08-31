@@ -35,7 +35,8 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <ComboBox x:Name="serviceComboBox" Style="{StaticResource BaseInfoComboBox}" ItemsSource="{Binding Source={StaticResource servicesViewSource}}" DisplayMemberPath="Title" />
 
-            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" Text="MMM-yyyy"/>
+            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" Text="MMM-yyyy" Models:DatePickerCalendar.IsMonthYear="True" 
+            Models:DatePickerDateFormat.DateFormat="MMM-yyyy"/>
 
             <Button x:Name="exelButton" Content=" Створити звіт " Style="{StaticResource ServiceExecutionControlButtonStyle}"/>
 
