@@ -43,6 +43,7 @@
           <Property Name="DeathDate" Type="date" />
           <Property Name="StreetId" Type="int" />
           <Property Name="Gender" Type="tinyint" />
+          <Property Name="Other" Type="longtext" />
         </EntityType>
         <EntityType Name="customersocialtype">
           <Key>
@@ -70,7 +71,7 @@
           <Property Name="ServiceIdServiceExecution" Type="int" />
           <Property Name="Status" Type="tinyint" />
           <Property Name="Date" Type="date" />
-          <Property Name="PayOrFree" Type="varchar" MaxLength="45" />
+          <Property Name="PayOrFree" Type="tinyint" />
         </EntityType>
         <EntityType Name="servicesocialtype">
           <Key>
@@ -299,6 +300,7 @@
           <NavigationProperty Name="street" Relationship="Self.IdStreet" FromRole="customer" ToRole="street" />
           <NavigationProperty Name="serviceexecutions" Relationship="Self.ServiceExecutionCustomer" FromRole="customer" ToRole="serviceexecution" />
           <Property Name="Gender" Type="SByte" />
+          <Property Name="Other" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="customersocialtype">
           <Key>
@@ -332,7 +334,7 @@
           <Property Name="Date" Type="DateTime" />
           <NavigationProperty Name="customer" Relationship="Self.ServiceExecutionCustomer" FromRole="serviceexecution" ToRole="customer" />
           <NavigationProperty Name="service" Relationship="Self.ServiceExecutionService" FromRole="serviceexecution" ToRole="service" />
-          <Property Name="PayOrFree" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="PayOrFree" Type="SByte" />
         </EntityType>
         <EntityType Name="servicesocialtype">
           <Key>
@@ -543,6 +545,7 @@
           <EntitySetMapping Name="customers">
             <EntityTypeMapping TypeName="soccenModel.customer">
               <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="Other" ColumnName="Other" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

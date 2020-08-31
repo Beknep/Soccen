@@ -97,5 +97,11 @@ namespace Soccen
             Uri myUri = new Uri("SocialTypesPage.xaml", UriKind.Relative);
             MainFrame.Source = myUri;
         }
+
+        private void ServiseExecutionButton_Click(object sender, RoutedEventArgs e)
+        {
+            Uri myUri = new Uri("ServiceExecutionPage.xaml", UriKind.Relative);
+            MainFrame.Source = myUri;
+        }
     }
 }

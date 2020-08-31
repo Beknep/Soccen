@@ -35,25 +35,25 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <ComboBox x:Name="serviceComboBox" Style="{StaticResource BaseInfoComboBox}" ItemsSource="{Binding Source={StaticResource servicesViewSource}}" DisplayMemberPath="Title" />
 
-            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" local:DatePickerCalendar.IsMonthYear="True" local:DatePickerCalendar.DateFormat="MMM-yyyy" Text="MMM-yyyy"/>
+            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" Text="MMM-yyyy"/>
 
-            <Button x:Name="exelButton" Content="Створити звіт" Style="{StaticResource ListControlButtonStyle}" Margin="0,5,5,5" Width="auto" Height="30" Padding="5,0,5,0"/>
+            <Button x:Name="exelButton" Content=" Створити звіт " Style="{StaticResource ServiceExecutionControlButtonStyle}"/>
 
-            <Button x:Name="saveButton" Content="Зберегти зміни" Style="{StaticResource ListControlButtonStyle}" Margin="0,5,5,5" Width="auto" Height="30" Padding="5,0,5,0" />
+            <Button x:Name="saveButton" Content=" Зберегти зміни " Style="{StaticResource ServiceExecutionControlButtonStyle}"/>
 
-            <Button Name="btnFirst" Content=" |◄ "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource FirstCommand}"/>
+            <Button Name="btnFirst" Content=" |◄ "  Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource FirstCommand}"/>
             
-            <Button Name="btnPrev" Content=" ◄ "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource PreviousCommand}"/>
+            <Button Name="btnPrev" Content=" ◄ "  Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource PreviousCommand}"/>
             
-            <Button Name="btnNext" Content=" ► "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource NextCommand}"/>
+            <Button Name="btnNext" Content=" ► "  Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource NextCommand}"/>
             
-            <Button Name="btnLast" Content=" ►| "  Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource LastCommand}"/>
+            <Button Name="btnLast" Content=" ►| "  Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource LastCommand}"/>
         </StackPanel>
 
         <Grid Grid.Row="1" DataContext="{StaticResource serviceexecutionViewSource}">
             <DataGrid x:Name="serviceExecutionGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" >
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="numberColumn" Header="#" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={local:RowToIndexConvertor}}" />
+                    <DataGridTextColumn x:Name="numberColumn" Header="#" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={Models:RowToIndexConvertor}}" />
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding customer.Name}" Header="Ім'я" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="surnameColumn" Binding="{Binding customer.Surname}" Header="Прізвище" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding customer.Patronymic}" Header="По батькові" IsReadOnly="True"/>

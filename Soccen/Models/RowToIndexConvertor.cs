@@ -3,7 +3,7 @@ using System.Windows.Data;
 using System.Windows.Controls;
 using System.Windows.Markup;
 
-namespace Soccen.Views
+namespace Soccen.Models
 {
     public class RowToIndexConvertor : MarkupExtension, IValueConverter
     {
@@ -11,7 +11,8 @@ namespace Soccen.Views
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            DataGridRow row = value as DataGridRow;
+            DataGridRow dataGridRow = value as DataGridRow;
+            DataGridRow row = dataGridRow;
 
             if (row != null)
             {

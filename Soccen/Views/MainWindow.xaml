@@ -35,6 +35,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -72,9 +73,16 @@
 					Content=" Вулиці "
 					Style="{StaticResource TitleBarMenuButtonStyle}"
                     Click="StreetsPageButton_Click"/>
-                
+
                 <Button
-					Grid.Column="7"
+					Grid.Column="6"
+					Content=" Виконання послуг "
+					Style="{StaticResource TitleBarMenuButtonStyle}"
+                    Click="ServiseExecutionButton_Click"/>
+
+
+                <Button
+					Grid.Column="8"
 					Click="OnMinimizeButtonClick"
 					RenderOptions.EdgeMode="Aliased"
 					Style="{StaticResource BaseButtonStyle}">
@@ -89,7 +97,7 @@
                 
                 <Button
 					Name="maximizeButton"
-					Grid.Column="8"
+					Grid.Column="9"
 					Visibility="Visible"
 					Click="OnMaximizeRestoreButtonClick"
 					Style="{StaticResource BaseButtonStyle}">
@@ -104,7 +112,7 @@
                 
                 <Button
 					Name="restoreButton"
-					Grid.Column="8"
+					Grid.Column="9"
 					Click="OnMaximizeRestoreButtonClick"
 					Visibility="Collapsed"
 					Style="{StaticResource BaseButtonStyle}">
@@ -118,7 +126,7 @@
                 </Button>
                 
                 <Button
-					Grid.Column="9"
+					Grid.Column="10"
 					Click="OnCloseButtonClick"
 					Style="{StaticResource TitleBarCloseButtonStyle}">
                     <Path

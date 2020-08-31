@@ -119,6 +119,10 @@
     <Compile Include="Views\ReportsPage.xaml.cs">
       <DependentUpon>ReportsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\RowToIndexConvertor.cs" />
+    <Compile Include="Views\ServiceExecutionPage.xaml.cs">
+      <DependentUpon>ServiceExecutionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ServisesPage.xaml.cs">
       <DependentUpon>ServisesPage.xaml</DependentUpon>
     </Compile>
@@ -209,6 +213,10 @@
     <Page Include="Views\ReportsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServiceExecutionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ServisesPage.xaml">
       <SubType>Designer</SubType>
