@@ -33,10 +33,10 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <ComboBox x:Name="serviceComboBox" Style="{StaticResource BaseInfoComboBox}" ItemsSource="{Binding Source={StaticResource servicesViewSource}}" DisplayMemberPath="Title" />
+            <ComboBox x:Name="serviceComboBox" Style="{StaticResource BaseInfoComboBox}" ItemsSource="{Binding Source={StaticResource servicesViewSource}}" SelectedValuePath="IdService" DisplayMemberPath="Title" SelectionChanged="FilteringSelectionChanged" />
 
             <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" Text="MMM-yyyy" Models:DatePickerCalendar.IsMonthYear="True" 
-            Models:DatePickerDateFormat.DateFormat="MMM-yyyy"/>
+            Models:DatePickerDateFormat.DateFormat="MMM-yyyy" SelectedDateChanged="FilteringSelectionChanged"/>
 
             <Button x:Name="exelButton" Content=" Створити звіт " Style="{StaticResource ServiceExecutionControlButtonStyle}"/>
 

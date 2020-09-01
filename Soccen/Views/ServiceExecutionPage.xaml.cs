@@ -23,7 +23,6 @@ namespace Soccen.Views
     /// </summary>
     public partial class ServiceExecutionPage : Page
     {
-
         soccenEntities context = new soccenEntities();
         CollectionViewSource serviceexecutionViewSource;
         CollectionViewSource servicesViewSource;
@@ -42,6 +41,7 @@ namespace Soccen.Views
             context.services.Load();
             serviceexecutionViewSource.Source = context.serviceexecutions.Local;
             servicesViewSource.Source = context.services.Local;
+ 
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -74,7 +74,44 @@ namespace Soccen.Views
             context.SaveChanges();
         }
 
+        private void FilteringSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            serviceexecutionViewSource.Filter += new FilterEventHandler(ServiceExecution_ServiceFilter);
+            if(periodDatePicker.SelectedDate != null) serviceexecutionViewSource.Filter += new FilterEventHandler(ServiceExecution_DateFilter);
+            serviceexecutionViewSource.View.Refresh();
+        }
 
+        void ServiceExecution_ServiceFilter(object sender, FilterEventArgs e)
+        {
+            serviceexecution serex = e.Item as serviceexecution;
+            if (serex != null)
+            {
+                if (serex.service == serviceComboBox.SelectedItem)
+                {
+                    e.Accepted = true;
+                }
+                else
+                {
+                    e.Accepted = false;
+                }
+            }
+        }
+
+        void ServiceExecution_DateFilter(object sender, FilterEventArgs e)
+        {
+            serviceexecution serex = e.Item as serviceexecution;
+            if (serex != null)
+            {
+                if ((DateTime.Parse(serex.Date.ToString()).Year == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Year)&&(DateTime.Parse(serex.Date.ToString()).Month == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Month))
+                {
+                    e.Accepted = true;
+                }
+                else
+                {
+                    e.Accepted = false;
+                }
+            }
+        }
 
 
         //private void dgsalesinvoice_layoutupdated(object sender, eventargs e)
