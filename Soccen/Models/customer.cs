@@ -40,7 +40,7 @@ namespace Soccen.Models
         public System.DateTime RegistrationDate { get; set; }
         public Nullable<System.DateTime> DeathDate { get; set; }
         public Nullable<int> StreetId { get; set; }
-        public Nullable<sbyte> Gender { get; set; }
+        public string Gender { get; set; }
         public string Other { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

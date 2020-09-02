@@ -42,7 +42,7 @@
           <Property Name="RegistrationDate" Type="date" Nullable="false" />
           <Property Name="DeathDate" Type="date" />
           <Property Name="StreetId" Type="int" />
-          <Property Name="Gender" Type="tinyint" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Other" Type="longtext" />
         </EntityType>
         <EntityType Name="customersocialtype">
@@ -299,7 +299,7 @@
           <NavigationProperty Name="customersocialtypes" Relationship="Self.CustomerSocialType1" FromRole="customer" ToRole="customersocialtype" />
           <NavigationProperty Name="street" Relationship="Self.IdStreet" FromRole="customer" ToRole="street" />
           <NavigationProperty Name="serviceexecutions" Relationship="Self.ServiceExecutionCustomer" FromRole="customer" ToRole="serviceexecution" />
-          <Property Name="Gender" Type="SByte" />
+          <Property Name="Gender" Type="String" Nullable="false" />
           <Property Name="Other" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="customersocialtype">

@@ -1,6 +1,7 @@
 ﻿using Soccen.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
@@ -41,7 +42,7 @@ namespace Soccen.Views
             context.services.Load();
             serviceexecutionViewSource.Source = context.serviceexecutions.Local;
             servicesViewSource.Source = context.services.Local;
- 
+
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -75,7 +76,7 @@ namespace Soccen.Views
         }
 
         private void FilteringSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        { 
             serviceexecutionViewSource.Filter += new FilterEventHandler(ServiceExecution_ServiceFilter);
             if(periodDatePicker.SelectedDate != null) serviceexecutionViewSource.Filter += new FilterEventHandler(ServiceExecution_DateFilter);
             serviceexecutionViewSource.View.Refresh();

@@ -33,7 +33,23 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <ComboBox x:Name="serviceComboBox" Style="{StaticResource BaseInfoComboBox}" ItemsSource="{Binding Source={StaticResource servicesViewSource}}" SelectedValuePath="IdService" DisplayMemberPath="Title" SelectionChanged="FilteringSelectionChanged" />
+            <ComboBox x:Name="serviceComboBox" Text="Select Industry" TextSearch.TextPath ="Industry" Style="{StaticResource BaseInfoComboBox}" SelectedValuePath="IdService" SelectionChanged="FilteringSelectionChanged">
+                <ComboBox.ItemsSource>
+                    <CompositeCollection>
+                        <ComboBoxItem BorderBrush="{StaticResource MediumBrush }">
+                            <Label x:Name="allTextBox" Style="{StaticResource ComboxBoxLabel}" >Показати всі</Label>
+                        </ComboBoxItem>
+                        <CollectionContainer Collection="{Binding Source={StaticResource servicesViewSource}}"/>
+                    </CompositeCollection>
+                </ComboBox.ItemsSource>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label x:Name="serviceComboBoxTextBox" Content="{Binding Title}" Style="{StaticResource ComboxBoxLabel}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
             <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" Text="MMM-yyyy" Models:DatePickerCalendar.IsMonthYear="True" 
             Models:DatePickerDateFormat.DateFormat="MMM-yyyy" SelectedDateChanged="FilteringSelectionChanged"/>
@@ -58,7 +74,7 @@
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding customer.Name}" Header="Ім'я" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="surnameColumn" Binding="{Binding customer.Surname}" Header="Прізвище" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding customer.Patronymic}" Header="По батькові" IsReadOnly="True"/>
-                    <DataGridCheckBoxColumn x:Name="genderColumn" Binding="{Binding customer.Gender}" Header="Стать" IsReadOnly="True" />
+                    <DataGridTextColumn x:Name="genderColumn" Binding="{Binding customer.Gender, Converter={Models:BoolToGenderConverter}}" Header="Стать" IsReadOnly="True" />
                     <DataGridCheckBoxColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Виконання"/>
                 </DataGrid.Columns>
             </DataGrid>

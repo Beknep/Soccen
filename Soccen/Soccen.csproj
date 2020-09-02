@@ -110,6 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\BoolToGenderConverter.cs" />
     <Compile Include="Models\DatePickerFormat.cs" />
     <Compile Include="Views\BanksPage.xaml.cs">
       <DependentUpon>BanksPage.xaml</DependentUpon>
