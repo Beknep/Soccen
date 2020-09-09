@@ -27,6 +27,8 @@ namespace Soccen.Views
         soccenEntities context = new soccenEntities();
         CollectionViewSource serviceexecutionViewSource;
         CollectionViewSource servicesViewSource;
+        int serviceExecutionCount;
+        int serviceExecutionAcceptedCount;
 
         public ServiceExecutionPage()
         {
@@ -34,6 +36,8 @@ namespace Soccen.Views
             serviceexecutionViewSource = ((CollectionViewSource)(FindResource("serviceexecutionViewSource")));
             servicesViewSource = ((CollectionViewSource)(FindResource("servicesViewSource")));
             DataContext = this;
+            
+            serviceexecutionViewSource.Filter += ServiceExecution_Filter;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -42,7 +46,7 @@ namespace Soccen.Views
             context.services.Load();
             serviceexecutionViewSource.Source = context.serviceexecutions.Local;
             servicesViewSource.Source = context.services.Local;
-
+            SetSummary();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -75,54 +79,64 @@ namespace Soccen.Views
             context.SaveChanges();
         }
 
+        private void ServiceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (serviceexecutionViewSource != null)
+            {
+                serviceexecutionViewSource.View.Refresh();
+                SetSummary();
+            }
+            
+        }
+
         private void FilteringSelectionChanged(object sender, SelectionChangedEventArgs e)
-        { 
-            serviceexecutionViewSource.Filter += new FilterEventHandler(ServiceExecution_ServiceFilter);
-            if(periodDatePicker.SelectedDate != null) serviceexecutionViewSource.Filter += new FilterEventHandler(ServiceExecution_DateFilter);
-            serviceexecutionViewSource.View.Refresh();
+        {
+            if (serviceexecutionViewSource != null)
+            {
+                serviceexecutionViewSource.View.Refresh();
+                SetSummary();
+            }
+
         }
 
-        void ServiceExecution_ServiceFilter(object sender, FilterEventArgs e)
+        void ServiceExecution_Filter(object sender, FilterEventArgs e)
         {
             serviceexecution serex = e.Item as serviceexecution;
             if (serex != null)
             {
-                if (serex.service == serviceComboBox.SelectedItem)
+                if((periodDatePicker.SelectedDate.ToString() != null) && (periodDatePicker.SelectedDate.ToString() != "") && (serviceComboBox.SelectedIndex != 0))
                 {
-                    e.Accepted = true;
+                    if (((periodDatePicker.SelectedDate.ToString()) == null) && (periodDatePicker.SelectedDate.ToString() == "")) e.Accepted = serex.service == serviceComboBox.SelectedItem;
+                    else if (serviceComboBox.SelectedIndex == 0) e.Accepted = (DateTime.Parse(serex.Date.ToString()).Year == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Year) && (DateTime.Parse(serex.Date.ToString()).Month == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Month);
+                        else e.Accepted = (serex.service == serviceComboBox.SelectedItem) && ((DateTime.Parse(serex.Date.ToString()).Year == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Year) && (DateTime.Parse(serex.Date.ToString()).Month == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Month));
                 }
-                else
-                {
-                    e.Accepted = false;
-                }
+                else e.Accepted = true;
             }
         }
 
-        void ServiceExecution_DateFilter(object sender, FilterEventArgs e)
+        private void serviceExecutionGrid_LayoutUpdated(object sender, EventArgs e)
         {
-            serviceexecution serex = e.Item as serviceexecution;
-            if (serex != null)
-            {
-                if ((DateTime.Parse(serex.Date.ToString()).Year == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Year)&&(DateTime.Parse(serex.Date.ToString()).Month == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Month))
-                {
-                    e.Accepted = true;
-                }
-                else
-                {
-                    e.Accepted = false;
-                }
-            }
+        //    Thickness t = lblTotal.Margin;
+        //    t.Left = (serviceExecutionGrid.Columns[0].ActualWidth + 7);
+        //    lblTotal.Margin = t;
+        //    lblTotal.Width = serviceExecutionGrid.Columns[1].ActualWidth;
+              lblTotalExecutionServicesAmount.Text = serviceExecutionCount.ToString();
+              lblTotalExecutedServisesAmount.Text = serviceExecutionAcceptedCount.ToString();
+            //    lblTotalServiceExecutionAmount.Width = serviceExecutionGrid.Columns[2].ActualWidth;
         }
 
-
-        //private void dgsalesinvoice_layoutupdated(object sender, eventargs e)
-        //{
-        //    thickness t = lbltotal.margin;
-        //    t.left = (serviceexecutiongrid.columns[0].actualwidth + 7);
-        //    lbltotal.margin = t;
-        //    lbltotal.width = serviceexecutiongrid.columns[1].actualwidth;
-
-        //    lbltotalsalesinvoiceamount.width = serviceexecutiongrid.columns[2].actualwidth;
-        //}
+        private void SetSummary()
+        {
+            serviceExecutionCount = 0;
+            serviceExecutionAcceptedCount = 0;
+            foreach (serviceexecution item in serviceexecutionViewSource.View)
+            {
+                serviceExecutionCount++;
+            }
+            foreach (serviceexecution item in serviceexecutionViewSource.View)
+            {
+                if (item.Status == 1)serviceExecutionAcceptedCount++;
+            }
+        }
     }
 }

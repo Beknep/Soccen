@@ -1,5 +1,6 @@
 ﻿<Page x:Class="Soccen.Views.ServiceExecutionPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,8 +10,8 @@
       Title="CustomersPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Page.Resources>
-        <CollectionViewSource x:Key="serviceexecutionViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:serviceexecution}, CreateList=True}"/>
-        <CollectionViewSource x:Key="servicesViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:service}, CreateList=True}"/>
+        <CollectionViewSource x:Key="serviceexecutionViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:serviceexecution}, CreateList=True}" CollectionViewType="ListCollectionView"/>
+        <CollectionViewSource x:Key="servicesViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:service}, CreateList=True}" CollectionViewType="ListCollectionView"/>
         <RoutedUICommand x:Key="SaveCommand" Text="Save"/>
         <RoutedUICommand x:Key="FirstCommand" Text="First"/>
         <RoutedUICommand x:Key="LastCommand" Text="Last"/>
@@ -30,10 +31,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <ComboBox x:Name="serviceComboBox" Text="Select Industry" TextSearch.TextPath ="Industry" Style="{StaticResource BaseInfoComboBox}" SelectedValuePath="IdService" SelectionChanged="FilteringSelectionChanged">
+            <ComboBox x:Name="serviceComboBox"  Style="{StaticResource BaseInfoComboBox}" SelectedIndex="0" SelectionChanged="FilteringSelectionChanged">
                 <ComboBox.ItemsSource>
                     <CompositeCollection>
                         <ComboBoxItem BorderBrush="{StaticResource MediumBrush }">
@@ -51,7 +53,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" Text="MMM-yyyy" Models:DatePickerCalendar.IsMonthYear="True" 
+            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" SelectedDate="{x:Static sys:DateTime.Now}"  Text="MMM-yyyy"  Models:DatePickerCalendar.IsMonthYear="True" 
             Models:DatePickerDateFormat.DateFormat="MMM-yyyy" SelectedDateChanged="FilteringSelectionChanged"/>
 
             <Button x:Name="exelButton" Content=" Створити звіт " Style="{StaticResource ServiceExecutionControlButtonStyle}"/>
@@ -67,8 +69,8 @@
             <Button Name="btnLast" Content=" ►| "  Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource LastCommand}"/>
         </StackPanel>
 
-        <Grid Grid.Row="1" DataContext="{StaticResource serviceexecutionViewSource}">
-            <DataGrid x:Name="serviceExecutionGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" >
+        <Grid Grid.Row="1" DataContext="{StaticResource serviceexecutionViewSource}" >
+            <DataGrid x:Name="serviceExecutionGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" LayoutUpdated="serviceExecutionGrid_LayoutUpdated">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="numberColumn" Header="#" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={Models:RowToIndexConvertor}}" />
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding customer.Name}" Header="Ім'я" IsReadOnly="True"/>
@@ -79,8 +81,15 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        
-        
-        
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <TextBlock x:Name="lblTotalExecutionServises" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">Кількість послуг:</TextBlock>
+            <TextBlock x:Name="lblTotalExecutionServicesAmount" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+            <TextBlock x:Name="lblTotalExecutedServises" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">Виконанні послуги</TextBlock>
+            <TextBlock x:Name="lblTotalExecutedServisesAmount" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+            <TextBlock x:Name="lblTotalNoExecutedServises" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">Не виконані послуги:</TextBlock>
+            <TextBlock x:Name="lblTotalNoExecutedServisesAmount" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+        </StackPanel>
+
     </Grid>
 </Page>
