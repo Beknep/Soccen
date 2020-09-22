@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Soccen.Views"
-      xmlns:Models="clr-namespace:Soccen.Models" 
+      xmlns:Models="clr-namespace:Soccen.Models"
       x:Class="Soccen.Views.CustomersPage"
       mc:Ignorable="d" 
       Title="CustomersPage" Loaded="Page_Loaded">
@@ -109,9 +109,10 @@
                         <Label Content="По батькові:" Grid.Column="0" Grid.Row="6" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="patronymicTextBox" Grid.Column="1" Grid.Row="6" Text="{Binding Patronymic, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoTextBox}"/>
 
-                        <StackPanel Grid.Column="0" Grid.Row="7" Margin="3">
-                            <RadioButton GroupName="CharacterGender" Content="Жінка" IsChecked="{Binding Gender}" Style="{StaticResource BaseRadioButton}"/>
-                            <RadioButton GroupName="CharacterGender" Content="Чоловік" IsChecked="{Binding Gender}" Style="{StaticResource BaseRadioButton}" />
+                        <Label Content="Стать:" Grid.Column="0" Grid.Row="7" Style="{StaticResource BaseInfoLabel}"/>
+                        <StackPanel Grid.Column="1" Grid.Row="7">
+                            <RadioButton x:Name="femaleRadioButton" GroupName="CharacterGender" Content="Жінка" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Жінка'}" Style="{StaticResource BaseRadioButton}" />
+                            <RadioButton x:Name="maleRadioButton" GroupName="CharacterGender" Content="Чоловік" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Чоловік'}" Style="{StaticResource BaseRadioButton}" />
                         </StackPanel>
                     </Grid>
 
@@ -254,9 +255,10 @@
                         <Label Content="По батькові:" Grid.Column="0" Grid.Row="6" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="add_patronymicTextBox" Grid.Column="1" Grid.Row="6" Text="{Binding Patronymic, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoTextBox}"/>
 
-                        <StackPanel Grid.Column="0" Grid.Row="7" Margin="3">
-                            <RadioButton GroupName="add_CharacterGender" Content="Жінка" IsChecked="{Binding Gender}" Style="{StaticResource BaseRadioButton}"/>
-                            <RadioButton GroupName="add_CharacterGender" Content="Чоловік" IsChecked="{Binding Gender}" Style="{StaticResource BaseRadioButton}" />
+                        <Label Content="Стать:" Grid.Column="0" Grid.Row="7" Style="{StaticResource BaseInfoLabel}"/>
+                        <StackPanel Grid.Column="1" Grid.Row="7">
+                            <RadioButton x:Name="add_femaleRadioButton" GroupName="CharacterGender" Content="Жінка" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Жінка'}" Style="{StaticResource BaseRadioButton}" />
+                            <RadioButton x:Name="add_maleRadioButton" GroupName="CharacterGender" Content="Чоловік" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Чоловік'}" Style="{StaticResource BaseRadioButton}" />
                         </StackPanel>
                     </Grid>
 
@@ -395,7 +397,7 @@
                     <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding Patronymic}" Header="По батькові" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="registrationdateColumn" Header="Дата реєстрації" Binding="{Binding RegistrationDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="birthdateColumn" Header="Дата народження" Binding="{Binding BirthDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="GenderColumn" Binding="{Binding Gender, Converter={Models:BoolToGenderConverter}}" Header="Жінка" Width="SizeToHeader" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="GenderColumn" Binding="{Binding Gender}" Header="Жінка" Width="SizeToHeader" IsReadOnly="True"/>
 
                     <DataGridTextColumn x:Name="cityColumn" Binding="{Binding City}" Header="Місто" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="streetColumn" Binding="{Binding street.Title}" Header="Вулиця" IsReadOnly="True"/>

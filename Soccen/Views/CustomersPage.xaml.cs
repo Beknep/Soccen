@@ -280,7 +280,6 @@ namespace Soccen.Views
             existingCustomerGrid.Visibility = Visibility.Visible;
             newCustomerGrid.Visibility = Visibility.Collapsed;
             customerSocialTypeGrid.Visibility = Visibility.Visible;
-
         }
 
         private void SelectSocialTypesCommandHandler(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)

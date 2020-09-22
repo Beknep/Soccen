@@ -122,6 +122,7 @@ namespace Soccen.Views
         //    lblTotal.Width = serviceExecutionGrid.Columns[1].ActualWidth;
               lblTotalExecutionServicesAmount.Text = serviceExecutionCount.ToString();
               lblTotalExecutedServisesAmount.Text = serviceExecutionAcceptedCount.ToString();
+              lblTotalNoExecutedServisesAmount.Text = (serviceExecutionCount - serviceExecutionAcceptedCount).ToString();
             //    lblTotalServiceExecutionAmount.Width = serviceExecutionGrid.Columns[2].ActualWidth;
         }
 
@@ -132,10 +133,7 @@ namespace Soccen.Views
             foreach (serviceexecution item in serviceexecutionViewSource.View)
             {
                 serviceExecutionCount++;
-            }
-            foreach (serviceexecution item in serviceexecutionViewSource.View)
-            {
-                if (item.Status == 1)serviceExecutionAcceptedCount++;
+                if (item.Status == 1) serviceExecutionAcceptedCount++;
             }
         }
     }

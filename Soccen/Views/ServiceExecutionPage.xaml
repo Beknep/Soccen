@@ -76,7 +76,7 @@
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding customer.Name}" Header="Ім'я" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="surnameColumn" Binding="{Binding customer.Surname}" Header="Прізвище" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding customer.Patronymic}" Header="По батькові" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="genderColumn" Binding="{Binding customer.Gender, Converter={Models:BoolToGenderConverter}}" Header="Стать" IsReadOnly="True" />
+                    <DataGridTextColumn x:Name="genderColumn" Binding="{Binding customer.Gender}" Header="Стать" IsReadOnly="True" />
                     <DataGridCheckBoxColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Виконання"/>
                 </DataGrid.Columns>
             </DataGrid>
