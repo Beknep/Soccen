@@ -120,9 +120,9 @@ namespace Soccen.Views
         //    t.Left = (serviceExecutionGrid.Columns[0].ActualWidth + 7);
         //    lblTotal.Margin = t;
         //    lblTotal.Width = serviceExecutionGrid.Columns[1].ActualWidth;
-              lblTotalExecutionServicesAmount.Text = serviceExecutionCount.ToString();
-              lblTotalExecutedServisesAmount.Text = serviceExecutionAcceptedCount.ToString();
-              lblTotalNoExecutedServisesAmount.Text = (serviceExecutionCount - serviceExecutionAcceptedCount).ToString();
+              //lblTotalExecutionServicesAmount.Text = serviceExecutionCount.ToString();
+              //lblTotalExecutedServisesAmount.Text = serviceExecutionAcceptedCount.ToString();
+              //lblTotalNoExecutedServisesAmount.Text = (serviceExecutionCount - serviceExecutionAcceptedCount).ToString();
             //    lblTotalServiceExecutionAmount.Width = serviceExecutionGrid.Columns[2].ActualWidth;
         }
 

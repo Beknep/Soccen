@@ -78,18 +78,65 @@
                     <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding customer.Patronymic}" Header="По батькові" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="genderColumn" Binding="{Binding customer.Gender}" Header="Стать" IsReadOnly="True" />
                     <DataGridCheckBoxColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Виконання"/>
+                    <DataGridCheckBoxColumn x:Name="payOrFreeColumn" Binding="{Binding PayOrFree}" Header="Платна"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <TextBlock x:Name="lblTotalExecutionServises" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">Кількість послуг:</TextBlock>
-            <TextBlock x:Name="lblTotalExecutionServicesAmount" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-            <TextBlock x:Name="lblTotalExecutedServises" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">Виконанні послуги</TextBlock>
-            <TextBlock x:Name="lblTotalExecutedServisesAmount" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-            <TextBlock x:Name="lblTotalNoExecutedServises" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">Не виконані послуги:</TextBlock>
-            <TextBlock x:Name="lblTotalNoExecutedServisesAmount" TextAlignment="Right" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-        </StackPanel>
+        <Grid Grid.Row="2">
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <TextBlock x:Name="lblTotalExecutionServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Кількість послуг:</TextBlock>
+                <TextBlock x:Name="lblTotalExecutedServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Виконанні послуги</TextBlock>
+                <TextBlock x:Name="lblTotalNoExecutedServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Не виконані послуги:</TextBlock>
+                <TextBlock x:Name="lblTotalPayedServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Платні:</TextBlock>
+                <TextBlock x:Name="lblTotalFreeServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Пільгові:</TextBlock>
+            </StackPanel>
 
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <TextBlock x:Name="lblTotalExecutionServicesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="lblTotalExecutedServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="lblTotalNoExecutedServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="lblTotalPayedServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="lblTotalFreeServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+            </StackPanel>-->
+
+
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding Width, ElementName=numberColumn, Converter={}}" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem Width="{Binding Width, ElementName=numberColumn}">
+                    <TextBlock Name="lblCursorPosition" Text="0"/>
+                </StatusBarItem>
+                <Separator Grid.Column="1" />
+                <StatusBarItem Grid.Column="2">
+                    <TextBlock Text="c:\path\of\current\file.txt" />
+                </StatusBarItem>
+                <Separator Grid.Column="3" />
+                <StatusBarItem Grid.Column="4">
+                    <ProgressBar Value="50" Width="90" Height="16" />
+                </StatusBarItem>
+            </StatusBar>
+
+        </Grid>
+        
     </Grid>
 </Page>

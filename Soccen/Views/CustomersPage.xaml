@@ -25,7 +25,7 @@
         <RoutedUICommand x:Key="SelectSocialTypes" Text="SelectSocialTypes"/>
         <RoutedUICommand x:Key="DeleteSocialTypes" Text="DeleteSocialTypes"/>
         <CollectionViewSource x:Key="customercustomersocialtypesViewSource" Source="{Binding customersocialtypes, Source={StaticResource customersViewSource}}"/>
-        
+
     </Page.Resources>
 
     <Page.CommandBindings>
@@ -114,6 +114,7 @@
                             <RadioButton x:Name="femaleRadioButton" GroupName="CharacterGender" Content="Жінка" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Жінка'}" Style="{StaticResource BaseRadioButton}" />
                             <RadioButton x:Name="maleRadioButton" GroupName="CharacterGender" Content="Чоловік" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Чоловік'}" Style="{StaticResource BaseRadioButton}" />
                         </StackPanel>
+
                     </Grid>
 
                     <Grid x:Name="CustomerResidenceAddressInfoGrid" Grid.Row="0" Grid.Column="1" >
@@ -123,6 +124,8 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -143,6 +146,10 @@
 
                         <Label Content="Квартира:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="apartmentTextBox" Grid.Column="1"  Grid.Row="4" Text="{Binding Apartment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Додаткова інформація:" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource BaseInfoLabel}" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="additInfoTextBox" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Text="{Binding Other, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoOtherTextBox}" />
+
                     </Grid>
 
                     <Grid x:Name="CustomerContactInfoGrid" Grid.Row="0" Grid.Column="2">
@@ -199,7 +206,7 @@
                         <CheckBox x:Name="otgStatusCheckBox" Grid.Column="1" Grid.Row="3" IsChecked="{Binding OtgStatus, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Style="{StaticResource BaseInfoCheckBox}"/>
                     </Grid>
 
-                    
+
                 </Grid>
 
                 <Grid x:Name="newCustomerGrid" DataContext="{Binding newCustomer, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, UpdateSourceTrigger=Explicit}" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top" Visibility="Collapsed">
@@ -306,7 +313,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Content="Контактна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
-                        
+
                         <Label Content="Номер телефону:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="add_phonenumberTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding Phonenumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
 
@@ -334,7 +341,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Content="Інше" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
-                        
+
                         <Label Content="Дата смерті:" Grid.Column="0" Grid.Row="1" Style="{StaticResource BaseInfoLabel}"/>
                         <DatePicker x:Name="add_deathDateDatePicker" Grid.Column="1" Grid.Row="1" SelectedDate="{Binding DeathDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseInfoDatePicker}"/>
 
@@ -364,7 +371,7 @@
 
             <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Content="Соціальні групи підопічного:" Style="{StaticResource HeaderLabel}"/>
             <ListBox Grid.Column="0" Grid.Row="1" Name="customerSocialTypesList" ItemsSource="{Binding Source={StaticResource customercustomersocialtypesViewSource}}" DisplayMemberPath="socialtype.Title"/>
-            
+
             <WrapPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Name="btnSelectSocialTypes" Content=" Добавити " Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource SelectSocialTypes}"/>
                 <Button Name="btnDeleteSocialTypes" Content=" Видалити " Style="{StaticResource ListControlButtonStyle}" Command="{StaticResource DeleteSocialTypes}"/>

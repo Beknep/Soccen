@@ -207,8 +207,36 @@ namespace Soccen.Views
         private void AddCommandHandler(object sender, RoutedEventArgs e)
         {
 
+            clear(sender, e);
+
+            //add_apartmentTextBox.Text = "";
+            //cityTextBox.Text = "Коломия";
+            //add_birthDateDatePicker.SelectedDate = DateTime.Today;
+            //add_deathDateDatePicker.SelectedDate = null;
+            //add_registrationDateDatePicker.SelectedDate = DateTime.Today;
+            //add_streetComboBox.SelectedIndex = 1;
+            //add_nameTextBox.Text = "";
+            //add_patronymicTextBox.Text = "";
+            //add_surnameTextBox.Text = "";
+            //add_otgStatusCheckBox.IsChecked = false;
+            //add_liveStatusCheckBox.IsChecked = false;
+            //add_identificationTextBox.Text = "";
+            //add_passportTextBox.Text = "";
+            //add_phonenumberTextBox.Text = "";
+            //add_houseTextBox.Text = "";
+            //add_emailTextBox.Text = "";
+
+            existingCustomerGrid.Visibility = Visibility.Collapsed;
+            newCustomerGrid.Visibility = Visibility.Visible;
+            customerSocialTypeGrid.Visibility = Visibility.Collapsed;
+
+
+        }
+
+        void clear(object sender, RoutedEventArgs e)
+        {
             add_apartmentTextBox.Text = "";
-            cityTextBox.Text = "Коломия";
+            add_cityTextBox.Text = "Коломия";
             add_birthDateDatePicker.SelectedDate = DateTime.Today;
             add_deathDateDatePicker.SelectedDate = null;
             add_registrationDateDatePicker.SelectedDate = DateTime.Today;
@@ -223,12 +251,6 @@ namespace Soccen.Views
             add_phonenumberTextBox.Text = "";
             add_houseTextBox.Text = "";
             add_emailTextBox.Text = "";
-
-            existingCustomerGrid.Visibility = Visibility.Collapsed;
-            newCustomerGrid.Visibility = Visibility.Visible;
-            customerSocialTypeGrid.Visibility = Visibility.Collapsed;
-
-
         }
 
         private void CancelCommandHandler(object sender, RoutedEventArgs e)
@@ -236,22 +258,7 @@ namespace Soccen.Views
 
             if (newCustomerGrid.IsVisible)
             {
-                add_apartmentTextBox.Text = "";
-                cityTextBox.Text = "Коломия";
-                add_birthDateDatePicker.SelectedDate = DateTime.Today;
-                add_deathDateDatePicker.SelectedDate = null;
-                add_registrationDateDatePicker.SelectedDate = DateTime.Today;
-                add_streetComboBox.SelectedIndex = 1;
-                add_nameTextBox.Text = "";
-                add_patronymicTextBox.Text = "";
-                add_surnameTextBox.Text = "";
-                add_otgStatusCheckBox.IsChecked = false;
-                add_liveStatusCheckBox.IsChecked = false;
-                add_identificationTextBox.Text = "";
-                add_passportTextBox.Text = "";
-                add_phonenumberTextBox.Text = "";
-                add_houseTextBox.Text = "";
-                add_emailTextBox.Text = "";
+                clear(sender, e);
             } 
             else if (existingCustomerGrid.IsVisible)
             {
@@ -271,6 +278,9 @@ namespace Soccen.Views
                 phonenumberTextBox.Text = "";
                 houseTextBox.Text = "";
                 emailTextBox.Text = "";
+                maleRadioButton.IsChecked = false;
+                femaleRadioButton.IsChecked = false;
+                additInfoTextBox.Text = "";
             }
 
         }
