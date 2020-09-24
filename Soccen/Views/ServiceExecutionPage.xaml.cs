@@ -25,28 +25,26 @@ namespace Soccen.Views
     public partial class ServiceExecutionPage : Page
     {
         soccenEntities context = new soccenEntities();
-        CollectionViewSource serviceexecutionViewSource;
+        CollectionViewSource serviceExecutionViewSource;
         CollectionViewSource servicesViewSource;
-        int serviceExecutionCount;
-        int serviceExecutionAcceptedCount;
 
         public ServiceExecutionPage()
         {
             InitializeComponent();
-            serviceexecutionViewSource = ((CollectionViewSource)(FindResource("serviceexecutionViewSource")));
+            serviceExecutionViewSource = ((CollectionViewSource)(FindResource("serviceexecutionViewSource")));
             servicesViewSource = ((CollectionViewSource)(FindResource("servicesViewSource")));
             DataContext = this;
             
-            serviceexecutionViewSource.Filter += ServiceExecution_Filter;
+            serviceExecutionViewSource.Filter += ServiceExecution_Filter;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             context.serviceexecutions.Load();
             context.services.Load();
-            serviceexecutionViewSource.Source = context.serviceexecutions.Local;
+            serviceExecutionViewSource.Source = context.serviceexecutions.Local;
             servicesViewSource.Source = context.services.Local;
-            SetSummary();
+            
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -56,22 +54,22 @@ namespace Soccen.Views
 
         private void LastCommandHandler(object sender, RoutedEventArgs e)
         {
-            serviceexecutionViewSource.View.MoveCurrentToLast();
+            serviceExecutionViewSource.View.MoveCurrentToLast();
         }
 
         private void PreviousCommandHandler(object sender, RoutedEventArgs e)
         {
-            serviceexecutionViewSource.View.MoveCurrentToPrevious();
+            serviceExecutionViewSource.View.MoveCurrentToPrevious();
         }
 
         private void NextCommandHandler(object sender, RoutedEventArgs e)
         {
-            serviceexecutionViewSource.View.MoveCurrentToNext();
+            serviceExecutionViewSource.View.MoveCurrentToNext();
         }
 
         private void FirstCommandHandler(object sender, RoutedEventArgs e)
         {
-            serviceexecutionViewSource.View.MoveCurrentToFirst();
+            serviceExecutionViewSource.View.MoveCurrentToFirst();
         }
 
         private void SaveComandHandler(object sender, ExecutedRoutedEventArgs e)
@@ -81,24 +79,25 @@ namespace Soccen.Views
 
         private void ServiceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (serviceexecutionViewSource != null)
+            if (serviceExecutionViewSource != null)
             {
-                serviceexecutionViewSource.View.Refresh();
-                SetSummary();
+                serviceExecutionViewSource.View.Refresh();
+                
             }
             
         }
 
         private void FilteringSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (serviceexecutionViewSource != null)
+            if (serviceExecutionViewSource != null)
             {
-                serviceexecutionViewSource.View.Refresh();
-                SetSummary();
+                serviceExecutionViewSource.View.Refresh();
+               
             }
 
         }
 
+        // Filter for 
         void ServiceExecution_Filter(object sender, FilterEventArgs e)
         {
             serviceexecution serex = e.Item as serviceexecution;
@@ -114,26 +113,78 @@ namespace Soccen.Views
             }
         }
 
+        // ServiceExecuted statistic function
         private void serviceExecutionGrid_LayoutUpdated(object sender, EventArgs e)
         {
-        //    Thickness t = lblTotal.Margin;
-        //    t.Left = (serviceExecutionGrid.Columns[0].ActualWidth + 7);
-        //    lblTotal.Margin = t;
-        //    lblTotal.Width = serviceExecutionGrid.Columns[1].ActualWidth;
-              //lblTotalExecutionServicesAmount.Text = serviceExecutionCount.ToString();
-              //lblTotalExecutedServisesAmount.Text = serviceExecutionAcceptedCount.ToString();
-              //lblTotalNoExecutedServisesAmount.Text = (serviceExecutionCount - serviceExecutionAcceptedCount).ToString();
-            //    lblTotalServiceExecutionAmount.Width = serviceExecutionGrid.Columns[2].ActualWidth;
-        }
-
-        private void SetSummary()
-        {
-            serviceExecutionCount = 0;
-            serviceExecutionAcceptedCount = 0;
-            foreach (serviceexecution item in serviceexecutionViewSource.View)
+            if (serviceExecutionViewSource.View != null)
             {
-                serviceExecutionCount++;
-                if (item.Status == 1) serviceExecutionAcceptedCount++;
+                int templateServiceExecution = serviceExecutionViewSource.View.Cast<serviceexecution>().Count();
+
+                TextBoxTotalExecutionServicesAmount.Text = templateServiceExecution.ToString();
+
+                int templateServiceExected = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                              where item.Status == 1
+                                              select item).Count();
+
+                TextBoxTotalExecutedServicesAmount.Text = templateServiceExected.ToString();
+
+                TextBoxTotalNoExecutedServicesAmount.Text = (templateServiceExecution - templateServiceExected).ToString();
+
+                int templatePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                                      where item.PayOrFree == 1
+                                                      select item).Count();
+
+                TextBoxTotalPayedServicesAmount.Text = templatePayedServicesExecution.ToString();
+
+                TextBoxTotalFreeServicesAmount.Text = (templateServiceExecution - templatePayedServicesExecution).ToString();
+
+
+
+                int templateMaleServiceExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                                                where item.customer.Gender == "Чоловік"
+                                                                select item).Count();
+
+                TextBoxTotalMaleExecutionServicesAmount.Text = templateMaleServiceExecution.ToString();
+
+                int templateMaleServiceExecuted= (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                                               where item.customer.Gender == "Чоловік" && item.Status == 1
+                                                               select item).Count();
+
+                TextBoxTotalMaleExecutedServicesAmount.Text = templateMaleServiceExecuted.ToString();
+
+                TextBoxTotalMaleNoExecutedServicesAmount.Text = (templateMaleServiceExecution - templateMaleServiceExecuted).ToString();
+
+                int templateMalePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                                      where item.PayOrFree == 1 && item.customer.Gender == "Чоловік"
+                                                      select item).Count();
+
+                TextBoxTotalMalePayedServicesAmount.Text = templateMalePayedServicesExecution.ToString();
+
+                TextBoxTotalMaleFreeServicesAmount.Text = (templateMaleServiceExecution - templateMalePayedServicesExecution).ToString();
+
+
+
+                int templateFemaleServiceExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                                    where item.customer.Gender == "Жінка"
+                                                    select item).Count();
+
+                TextBoxTotalFemaleExecutionServicesAmount.Text = templateFemaleServiceExecution.ToString();
+
+                int templateFemaleServiceExecuted = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                                   where item.customer.Gender == "Жінка" && item.Status == 1
+                                                   select item).Count();
+
+                TextBoxTotalFemaleExecutedServicesAmount.Text = templateFemaleServiceExecuted.ToString();
+
+                TextBoxTotalFemaleNoExecutedServicesAmount.Text = (templateFemaleServiceExecution - templateFemaleServiceExecuted).ToString();
+
+                int templateFemalePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
+                                                          where item.PayOrFree == 1 && item.customer.Gender == "Жінка"
+                                                          select item).Count();
+
+                TextBoxTotalFemalePayedServicesAmount.Text = templateFemalePayedServicesExecution.ToString();
+
+                TextBoxTotalFemaleFreeServicesAmount.Text = (templateFemaleServiceExecution - templateFemalePayedServicesExecution).ToString();
             }
         }
     }

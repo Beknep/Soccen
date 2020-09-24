@@ -83,58 +83,50 @@
             </DataGrid>
         </Grid>
 
-        <Grid Grid.Row="2">
-            <!--<Grid.RowDefinitions>
+        <Grid Grid.Row="2" >
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+            
             <StackPanel Orientation="Horizontal" Grid.Row="0">
-                <TextBlock x:Name="lblTotalExecutionServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Кількість послуг:</TextBlock>
-                <TextBlock x:Name="lblTotalExecutedServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Виконанні послуги</TextBlock>
-                <TextBlock x:Name="lblTotalNoExecutedServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Не виконані послуги:</TextBlock>
-                <TextBlock x:Name="lblTotalPayedServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Платні:</TextBlock>
-                <TextBlock x:Name="lblTotalFreeServises" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">Пільгові:</TextBlock>
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}"/>
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Кількість послуг:</TextBlock>
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Виконанні послуги</TextBlock>
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Не виконані послуги:</TextBlock>
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Платні:</TextBlock>
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Пільгові:</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <TextBlock x:Name="lblTotalExecutionServicesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="lblTotalExecutedServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="lblTotalNoExecutedServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="lblTotalPayedServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="lblTotalFreeServisesAmount" TextAlignment="Left" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-            </StackPanel>-->
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Загальні</TextBlock>
+                <TextBlock x:Name="TextBoxTotalExecutionServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalNoExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalPayedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalFreeServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="2">
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Чоловіки</TextBlock>
+                <TextBlock x:Name="TextBoxTotalMaleExecutionServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalMaleExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalMaleNoExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalMalePayedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalMaleFreeServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+            </StackPanel>
 
-
-            <StatusBar DockPanel.Dock="Bottom">
-                <StatusBar.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="{Binding Width, ElementName=numberColumn, Converter={}}" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="100" />
-                            </Grid.ColumnDefinitions>
-                        </Grid>
-                    </ItemsPanelTemplate>
-                </StatusBar.ItemsPanel>
-                <StatusBarItem Width="{Binding Width, ElementName=numberColumn}">
-                    <TextBlock Name="lblCursorPosition" Text="0"/>
-                </StatusBarItem>
-                <Separator Grid.Column="1" />
-                <StatusBarItem Grid.Column="2">
-                    <TextBlock Text="c:\path\of\current\file.txt" />
-                </StatusBarItem>
-                <Separator Grid.Column="3" />
-                <StatusBarItem Grid.Column="4">
-                    <ProgressBar Value="50" Width="90" Height="16" />
-                </StatusBarItem>
-            </StatusBar>
+            <StackPanel Orientation="Horizontal" Grid.Row="3">
+                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Жінки</TextBlock>
+                <TextBlock x:Name="TextBoxTotalFemaleExecutionServicesAmount"  Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalFemaleExecutedServicesAmount"  Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalFemaleNoExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalFemalePayedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+                <TextBlock x:Name="TextBoxTotalFemaleFreeServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
+            </StackPanel>
 
         </Grid>
         
