@@ -17,10 +17,12 @@
         <RoutedUICommand x:Key="LastCommand" Text="Last"/>
         <RoutedUICommand x:Key="NextCommand" Text="Next"/>
         <RoutedUICommand x:Key="PreviousCommand" Text="Previous"/>
+        <RoutedUICommand x:Key="CreateServiceExecutionsCommand" Text="Create"/>
     </Page.Resources>
 
     <Page.CommandBindings>
         <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveComandHandler"/>
+        <CommandBinding Command="{StaticResource CreateServiceExecutionsCommand}" Executed="CreateServiceExecutionsCommandHandler"/>
         <CommandBinding Command="{StaticResource FirstCommand}" Executed="FirstCommandHandler"/>
         <CommandBinding Command="{StaticResource LastCommand}" Executed="LastCommandHandler"/>
         <CommandBinding Command="{StaticResource NextCommand}" Executed="NextCommandHandler"/>
@@ -56,9 +58,9 @@
             <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" SelectedDate="{x:Static sys:DateTime.Now}"  Text="MMM-yyyy"  Models:DatePickerCalendar.IsMonthYear="True" 
             Models:DatePickerDateFormat.DateFormat="MMM-yyyy" SelectedDateChanged="FilteringSelectionChanged"/>
 
-            <Button x:Name="exelButton" Content=" Створити звіт " Style="{StaticResource ServiceExecutionControlButtonStyle}"/>
+            <Button x:Name="createServiceExecutionButton" Content=" Створити набір послуг " Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource CreateServiceExecutionsCommand}"/>
 
-            <Button x:Name="saveButton" Content=" Зберегти зміни " Style="{StaticResource ServiceExecutionControlButtonStyle}"/>
+            <Button x:Name="saveButton" Content=" Зберегти зміни " Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource SaveCommand}"/>
 
             <Button Name="btnFirst" Content=" |◄ "  Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource FirstCommand}"/>
             
@@ -70,7 +72,7 @@
         </StackPanel>
 
         <Grid Grid.Row="1" DataContext="{StaticResource serviceexecutionViewSource}" >
-            <DataGrid x:Name="serviceExecutionGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" LayoutUpdated="serviceExecutionGrid_LayoutUpdated">
+            <DataGrid x:Name="serviceExecutionGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="numberColumn" Header="#" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={Models:RowToIndexConvertor}}" />
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding customer.Name}" Header="Ім'я" IsReadOnly="True"/>
@@ -82,53 +84,55 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-
-        <Grid Grid.Row="2" >
+        <Border Grid.Row="2" BorderThickness="1px" BorderBrush="Black">
+            <Grid>
             
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
             
-            <StackPanel Orientation="Horizontal" Grid.Row="0">
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}"/>
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Кількість послуг:</TextBlock>
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Виконанні послуги</TextBlock>
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Не виконані послуги:</TextBlock>
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Платні:</TextBlock>
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Пільгові:</TextBlock>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}" Foreground="Transparent"> Костиль</Label>
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Кількість послуг:</Label>
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Виконанні послуги:</Label>
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Не виконані послуги:</Label>
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Платні:</Label>
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Пільгові:</Label>
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Загальні</TextBlock>
-                <TextBlock x:Name="TextBoxTotalExecutionServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalNoExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalPayedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalFreeServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Загальні</Label>
+                    <Label x:Name="LabelTotalExecutionServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalExecutedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalNoExecutedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalPayedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalFreeServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                </StackPanel>
             
-            <StackPanel Orientation="Horizontal" Grid.Row="2">
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Чоловіки</TextBlock>
-                <TextBlock x:Name="TextBoxTotalMaleExecutionServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalMaleExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalMaleNoExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalMalePayedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalMaleFreeServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Чоловіки</Label>
+                    <Label x:Name="LabelTotalMaleExecutionServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalMaleExecutedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalMaleNoExecutedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalMalePayedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalMaleFreeServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3">
-                <TextBlock Style="{StaticResource TotalInfo_TextBlockStyle}">Жінки</TextBlock>
-                <TextBlock x:Name="TextBoxTotalFemaleExecutionServicesAmount"  Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalFemaleExecutedServicesAmount"  Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalFemaleNoExecutedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalFemalePayedServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-                <TextBlock x:Name="TextBoxTotalFemaleFreeServicesAmount" Style="{StaticResource TotalInfo_TextBlockStyle}">0</TextBlock>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="3">
+                    <Label Style="{StaticResource TotalInfoHeaderLabelStyle}">Жінки</Label>
+                    <Label x:Name="LabelTotalFemaleExecutionServicesAmount"  Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalFemaleExecutedServicesAmount"  Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalFemaleNoExecutedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalFemalePayedServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                    <Label x:Name="LabelTotalFemaleFreeServicesAmount" Style="{StaticResource TotalInfoLabelStyle}">0</Label>
+                </StackPanel>
 
-        </Grid>
+            </Grid>
+        </Border>
+        
         
     </Grid>
 </Page>

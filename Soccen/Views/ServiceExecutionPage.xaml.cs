@@ -77,6 +77,12 @@ namespace Soccen.Views
             context.SaveChanges();
         }
 
+        private void CreateServiceExecutionsCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+           // Create some exectuion of services
+
+        }
+
         private void ServiceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (serviceExecutionViewSource != null)
@@ -120,23 +126,23 @@ namespace Soccen.Views
             {
                 int templateServiceExecution = serviceExecutionViewSource.View.Cast<serviceexecution>().Count();
 
-                TextBoxTotalExecutionServicesAmount.Text = templateServiceExecution.ToString();
+                LabelTotalExecutionServicesAmount.Content = templateServiceExecution.ToString();
 
                 int templateServiceExected = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
                                               where item.Status == 1
                                               select item).Count();
 
-                TextBoxTotalExecutedServicesAmount.Text = templateServiceExected.ToString();
+                LabelTotalExecutedServicesAmount.Content = templateServiceExected.ToString();
 
-                TextBoxTotalNoExecutedServicesAmount.Text = (templateServiceExecution - templateServiceExected).ToString();
+                LabelTotalNoExecutedServicesAmount.Content = (templateServiceExecution - templateServiceExected).ToString();
 
                 int templatePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
                                                       where item.PayOrFree == 1
                                                       select item).Count();
 
-                TextBoxTotalPayedServicesAmount.Text = templatePayedServicesExecution.ToString();
+                LabelTotalPayedServicesAmount.Content = templatePayedServicesExecution.ToString();
 
-                TextBoxTotalFreeServicesAmount.Text = (templateServiceExecution - templatePayedServicesExecution).ToString();
+                LabelTotalFreeServicesAmount.Content = (templateServiceExecution - templatePayedServicesExecution).ToString();
 
 
 
@@ -144,23 +150,23 @@ namespace Soccen.Views
                                                                 where item.customer.Gender == "Чоловік"
                                                                 select item).Count();
 
-                TextBoxTotalMaleExecutionServicesAmount.Text = templateMaleServiceExecution.ToString();
+                LabelTotalMaleExecutionServicesAmount.Content = templateMaleServiceExecution.ToString();
 
                 int templateMaleServiceExecuted= (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
                                                                where item.customer.Gender == "Чоловік" && item.Status == 1
                                                                select item).Count();
 
-                TextBoxTotalMaleExecutedServicesAmount.Text = templateMaleServiceExecuted.ToString();
+                LabelTotalMaleExecutedServicesAmount.Content = templateMaleServiceExecuted.ToString();
 
-                TextBoxTotalMaleNoExecutedServicesAmount.Text = (templateMaleServiceExecution - templateMaleServiceExecuted).ToString();
+                LabelTotalMaleNoExecutedServicesAmount.Content = (templateMaleServiceExecution - templateMaleServiceExecuted).ToString();
 
                 int templateMalePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
                                                       where item.PayOrFree == 1 && item.customer.Gender == "Чоловік"
                                                       select item).Count();
 
-                TextBoxTotalMalePayedServicesAmount.Text = templateMalePayedServicesExecution.ToString();
+                LabelTotalMalePayedServicesAmount.Content = templateMalePayedServicesExecution.ToString();
 
-                TextBoxTotalMaleFreeServicesAmount.Text = (templateMaleServiceExecution - templateMalePayedServicesExecution).ToString();
+                LabelTotalMaleFreeServicesAmount.Content = (templateMaleServiceExecution - templateMalePayedServicesExecution).ToString();
 
 
 
@@ -168,23 +174,23 @@ namespace Soccen.Views
                                                     where item.customer.Gender == "Жінка"
                                                     select item).Count();
 
-                TextBoxTotalFemaleExecutionServicesAmount.Text = templateFemaleServiceExecution.ToString();
+                LabelTotalFemaleExecutionServicesAmount.Content = templateFemaleServiceExecution.ToString();
 
                 int templateFemaleServiceExecuted = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
                                                    where item.customer.Gender == "Жінка" && item.Status == 1
                                                    select item).Count();
 
-                TextBoxTotalFemaleExecutedServicesAmount.Text = templateFemaleServiceExecuted.ToString();
+                LabelTotalFemaleExecutedServicesAmount.Content = templateFemaleServiceExecuted.ToString();
 
-                TextBoxTotalFemaleNoExecutedServicesAmount.Text = (templateFemaleServiceExecution - templateFemaleServiceExecuted).ToString();
+                LabelTotalFemaleNoExecutedServicesAmount.Content = (templateFemaleServiceExecution - templateFemaleServiceExecuted).ToString();
 
                 int templateFemalePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
                                                           where item.PayOrFree == 1 && item.customer.Gender == "Жінка"
                                                           select item).Count();
 
-                TextBoxTotalFemalePayedServicesAmount.Text = templateFemalePayedServicesExecution.ToString();
+                LabelTotalFemalePayedServicesAmount.Content = templateFemalePayedServicesExecution.ToString();
 
-                TextBoxTotalFemaleFreeServicesAmount.Text = (templateFemaleServiceExecution - templateFemalePayedServicesExecution).ToString();
+                LabelTotalFemaleFreeServicesAmount.Content = (templateFemaleServiceExecution - templateFemalePayedServicesExecution).ToString();
             }
         }
     }
