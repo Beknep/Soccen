@@ -70,6 +70,17 @@
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
+    <Style x:Key="HeaderWindowLabel" TargetType="{x:Type Label}" BasedOn="{x:Null}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="FontFamily" Value= "Arial"/>
+        <Setter Property="Foreground" Value="{StaticResource LightBrush}"/>
+        <Setter Property="FontSize" Value= "16"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+    
     <Style x:Key="BaseInfoOtherTextBox" TargetType="{x:Type TextBox}" BasedOn="{x:Null}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>

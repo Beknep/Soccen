@@ -1,21 +1,11 @@
 ﻿using Soccen.Models;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Soccen.Views
 {
@@ -25,6 +15,7 @@ namespace Soccen.Views
     public partial class ServiceExecutionPage : Page
     {
         soccenEntities context = new soccenEntities();
+        CollectionViewSource customersViewSource;
         CollectionViewSource serviceExecutionViewSource;
         CollectionViewSource servicesViewSource;
 
@@ -33,8 +24,9 @@ namespace Soccen.Views
             InitializeComponent();
             serviceExecutionViewSource = ((CollectionViewSource)(FindResource("serviceexecutionViewSource")));
             servicesViewSource = ((CollectionViewSource)(FindResource("servicesViewSource")));
+            customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
             DataContext = this;
-            
+
             serviceExecutionViewSource.Filter += ServiceExecution_Filter;
         }
 
@@ -42,9 +34,11 @@ namespace Soccen.Views
         {
             context.serviceexecutions.Load();
             context.services.Load();
+            context.customers.Load();
             serviceExecutionViewSource.Source = context.serviceexecutions.Local;
             servicesViewSource.Source = context.services.Local;
-            
+            customersViewSource.Source = context.customers.Local;
+
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -79,8 +73,20 @@ namespace Soccen.Views
 
         private void CreateServiceExecutionsCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-           // Create some exectuion of services
+            // Create some execution of services
+            //var customers = (from item in customersViewSource.View.Cast<customer>()
+            //                                    where item.customersocialtypes. == "Чоловік"
+            //                                    select item).Count();
 
+        }
+
+        private void OpenServiceExecutionStatisticWindowButtonCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            if ((serviceExecutionViewSource != null) && (periodDatePicker.SelectedDate.ToString() != null) && (periodDatePicker.SelectedDate.ToString() != ""))
+            {
+                ServiceExecutionStatisticWindow window = new ServiceExecutionStatisticWindow(serviceExecutionViewSource, serviceComboBox.SelectedItem.ToString(), periodDatePicker.SelectedDate.ToString());
+                window.Show();
+            }
         }
 
         private void ServiceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -88,9 +94,9 @@ namespace Soccen.Views
             if (serviceExecutionViewSource != null)
             {
                 serviceExecutionViewSource.View.Refresh();
-                
+
             }
-            
+
         }
 
         private void FilteringSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,7 +104,7 @@ namespace Soccen.Views
             if (serviceExecutionViewSource != null)
             {
                 serviceExecutionViewSource.View.Refresh();
-               
+
             }
 
         }
@@ -109,88 +115,13 @@ namespace Soccen.Views
             serviceexecution serex = e.Item as serviceexecution;
             if (serex != null)
             {
-                if((periodDatePicker.SelectedDate.ToString() != null) && (periodDatePicker.SelectedDate.ToString() != "") && (serviceComboBox.SelectedIndex != 0))
+                if ((periodDatePicker.SelectedDate.ToString() != null) && (periodDatePicker.SelectedDate.ToString() != "") && (serviceComboBox.SelectedIndex != 0))
                 {
                     if (((periodDatePicker.SelectedDate.ToString()) == null) && (periodDatePicker.SelectedDate.ToString() == "")) e.Accepted = serex.service == serviceComboBox.SelectedItem;
                     else if (serviceComboBox.SelectedIndex == 0) e.Accepted = (DateTime.Parse(serex.Date.ToString()).Year == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Year) && (DateTime.Parse(serex.Date.ToString()).Month == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Month);
-                        else e.Accepted = (serex.service == serviceComboBox.SelectedItem) && ((DateTime.Parse(serex.Date.ToString()).Year == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Year) && (DateTime.Parse(serex.Date.ToString()).Month == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Month));
+                    else e.Accepted = (serex.service == serviceComboBox.SelectedItem) && ((DateTime.Parse(serex.Date.ToString()).Year == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Year) && (DateTime.Parse(serex.Date.ToString()).Month == DateTime.Parse(periodDatePicker.SelectedDate.ToString()).Month));
                 }
                 else e.Accepted = true;
-            }
-        }
-
-        // ServiceExecuted statistic function
-        private void serviceExecutionGrid_LayoutUpdated(object sender, EventArgs e)
-        {
-            if (serviceExecutionViewSource.View != null)
-            {
-                int templateServiceExecution = serviceExecutionViewSource.View.Cast<serviceexecution>().Count();
-
-                LabelTotalExecutionServicesAmount.Content = templateServiceExecution.ToString();
-
-                int templateServiceExected = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                              where item.Status == 1
-                                              select item).Count();
-
-                LabelTotalExecutedServicesAmount.Content = templateServiceExected.ToString();
-
-                LabelTotalNoExecutedServicesAmount.Content = (templateServiceExecution - templateServiceExected).ToString();
-
-                int templatePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                                      where item.PayOrFree == 1
-                                                      select item).Count();
-
-                LabelTotalPayedServicesAmount.Content = templatePayedServicesExecution.ToString();
-
-                LabelTotalFreeServicesAmount.Content = (templateServiceExecution - templatePayedServicesExecution).ToString();
-
-
-
-                int templateMaleServiceExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                                                where item.customer.Gender == "Чоловік"
-                                                                select item).Count();
-
-                LabelTotalMaleExecutionServicesAmount.Content = templateMaleServiceExecution.ToString();
-
-                int templateMaleServiceExecuted= (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                                               where item.customer.Gender == "Чоловік" && item.Status == 1
-                                                               select item).Count();
-
-                LabelTotalMaleExecutedServicesAmount.Content = templateMaleServiceExecuted.ToString();
-
-                LabelTotalMaleNoExecutedServicesAmount.Content = (templateMaleServiceExecution - templateMaleServiceExecuted).ToString();
-
-                int templateMalePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                                      where item.PayOrFree == 1 && item.customer.Gender == "Чоловік"
-                                                      select item).Count();
-
-                LabelTotalMalePayedServicesAmount.Content = templateMalePayedServicesExecution.ToString();
-
-                LabelTotalMaleFreeServicesAmount.Content = (templateMaleServiceExecution - templateMalePayedServicesExecution).ToString();
-
-
-
-                int templateFemaleServiceExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                                    where item.customer.Gender == "Жінка"
-                                                    select item).Count();
-
-                LabelTotalFemaleExecutionServicesAmount.Content = templateFemaleServiceExecution.ToString();
-
-                int templateFemaleServiceExecuted = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                                   where item.customer.Gender == "Жінка" && item.Status == 1
-                                                   select item).Count();
-
-                LabelTotalFemaleExecutedServicesAmount.Content = templateFemaleServiceExecuted.ToString();
-
-                LabelTotalFemaleNoExecutedServicesAmount.Content = (templateFemaleServiceExecution - templateFemaleServiceExecuted).ToString();
-
-                int templateFemalePayedServicesExecution = (from item in serviceExecutionViewSource.View.Cast<serviceexecution>()
-                                                          where item.PayOrFree == 1 && item.customer.Gender == "Жінка"
-                                                          select item).Count();
-
-                LabelTotalFemalePayedServicesAmount.Content = templateFemalePayedServicesExecution.ToString();
-
-                LabelTotalFemaleFreeServicesAmount.Content = (templateFemaleServiceExecution - templateFemalePayedServicesExecution).ToString();
             }
         }
     }
