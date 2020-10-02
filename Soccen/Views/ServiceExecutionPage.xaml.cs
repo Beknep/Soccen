@@ -1,6 +1,7 @@
 ﻿using Soccen.Models;
 using System;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -84,7 +85,13 @@ namespace Soccen.Views
         {
             if ((serviceExecutionViewSource != null) && (periodDatePicker.SelectedDate.ToString() != null) && (periodDatePicker.SelectedDate.ToString() != ""))
             {
-                ServiceExecutionStatisticWindow window = new ServiceExecutionStatisticWindow(serviceExecutionViewSource, serviceComboBox.SelectedItem.ToString(), periodDatePicker.SelectedDate.ToString());
+                string tempComboBoxText;
+                if (serviceComboBox.SelectedIndex == 0) 
+                    tempComboBoxText = serviceComboBox.Text; 
+                else
+                    tempComboBoxText = ((service)serviceComboBox.SelectedItem).Title; 
+
+                ServiceExecutionStatisticWindow window = new ServiceExecutionStatisticWindow(serviceExecutionViewSource, tempComboBoxText, ((DateTime)periodDatePicker.SelectedDate).ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("uk-UA")));
                 window.Show();
             }
         }
