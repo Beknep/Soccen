@@ -74,11 +74,7 @@ namespace Soccen.Views
 
         private void CreateServiceExecutionsCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            // Create some execution of services
-            //var customers = (from item in customersViewSource.View.Cast<customer>()
-            //                                    where item.customersocialtypes. == "Чоловік"
-            //                                    select item).Count();
-
+            
         }
 
         private void OpenServiceExecutionStatisticWindowButtonCommandHandler(object sender, ExecutedRoutedEventArgs e)

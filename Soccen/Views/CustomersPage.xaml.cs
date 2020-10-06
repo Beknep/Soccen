@@ -27,12 +27,12 @@ namespace Soccen.Views
         public CustomersPage()
         {
             InitializeComponent();
+            
             customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
             streetViewSource = ((CollectionViewSource)(FindResource("streetViewSource")));
             socialTypesViewSource = ((CollectionViewSource)(FindResource("socialTypesViewSource")));
             customercustomersocialtypesViewSource = ((CollectionViewSource)(FindResource("customercustomersocialtypesViewSource")));
             DataContext = this;
-
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -42,7 +42,6 @@ namespace Soccen.Views
             socialTypesViewSource.Source = context.socialtypes.Local;
             customersViewSource.Source = context.customers.Local;
             streetViewSource.Source = context.streets.Local;
-            
         }
 
         private void LastCommandHandler(object sender, RoutedEventArgs e)
@@ -84,10 +83,6 @@ namespace Soccen.Views
                         if (cust != null)
                         {
                             context.customers.Remove(cust);
-                            foreach (bankaccount var in cust.bankaccounts)
-                            {
-                                context.bankaccounts.Remove(var);
-                            }
                             foreach (customersocialtype var in cust.customersocialtypes)
                             {
                                 context.customersocialtypes.Remove(var);
@@ -109,9 +104,6 @@ namespace Soccen.Views
                     MessageBox.Show("Щойно відбувся оброблений виняток: " + ex.Message, "Помилка", MessageBoxButton.OK);
                 }
             }
-
-            
-
         }
 
         private void UpdateCommandHandler(object sender, RoutedEventArgs e)
@@ -163,20 +155,21 @@ namespace Soccen.Views
 
                     if (Regex.IsMatch(add_identificationTextBox.Text, @"\d{10}", RegexOptions.IgnoreCase))
                     {
-                        try
-                        {
-                            newCustomer.Identification = Int32.Parse((string)add_identificationTextBox.Text);
-                        }
-                        catch
-                        {
-                            errorString += "\nТам програміст натупив, скоро виправлять!";
-                        }
-                       
+                        newCustomer.Identification = add_identificationTextBox.Text;
                     }
                     else
                     {
                         errorString += "\nІдетифікаційни номер має містити 10 цифр!";
 
+                    }
+
+                    if (add_maleRadioButton.IsChecked == true)
+                    {
+                        newCustomer.Gender = add_maleRadioButton.Content.ToString();
+                    }
+                    else
+                    {
+                        newCustomer.Gender = add_femaleRadioButton.Content.ToString();
                     }
 
                     if (errorString != null)
@@ -209,28 +202,9 @@ namespace Soccen.Views
 
             clear(sender, e);
 
-            //add_apartmentTextBox.Text = "";
-            //cityTextBox.Text = "Коломия";
-            //add_birthDateDatePicker.SelectedDate = DateTime.Today;
-            //add_deathDateDatePicker.SelectedDate = null;
-            //add_registrationDateDatePicker.SelectedDate = DateTime.Today;
-            //add_streetComboBox.SelectedIndex = 1;
-            //add_nameTextBox.Text = "";
-            //add_patronymicTextBox.Text = "";
-            //add_surnameTextBox.Text = "";
-            //add_otgStatusCheckBox.IsChecked = false;
-            //add_liveStatusCheckBox.IsChecked = false;
-            //add_identificationTextBox.Text = "";
-            //add_passportTextBox.Text = "";
-            //add_phonenumberTextBox.Text = "";
-            //add_houseTextBox.Text = "";
-            //add_emailTextBox.Text = "";
-
             existingCustomerGrid.Visibility = Visibility.Collapsed;
             newCustomerGrid.Visibility = Visibility.Visible;
             customerSocialTypeGrid.Visibility = Visibility.Collapsed;
-
-
         }
 
         void clear(object sender, RoutedEventArgs e)
@@ -255,7 +229,6 @@ namespace Soccen.Views
 
         private void CancelCommandHandler(object sender, RoutedEventArgs e)
         {
-
             if (newCustomerGrid.IsVisible)
             {
                 clear(sender, e);
@@ -282,7 +255,6 @@ namespace Soccen.Views
                 femaleRadioButton.IsChecked = false;
                 additInfoTextBox.Text = "";
             }
-
         }
 
         private void customerDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -309,8 +281,6 @@ namespace Soccen.Views
                             return;
                         }
                     }
-
-                    
                     
                     cur.customersocialtypes.Add(new customersocialtype()
                     {

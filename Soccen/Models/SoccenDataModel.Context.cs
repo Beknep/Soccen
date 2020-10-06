@@ -25,8 +25,6 @@ namespace Soccen.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<bank> banks { get; set; }
-        public virtual DbSet<bankaccount> bankaccounts { get; set; }
         public virtual DbSet<customer> customers { get; set; }
         public virtual DbSet<customersocialtype> customersocialtypes { get; set; }
         public virtual DbSet<service> services { get; set; }

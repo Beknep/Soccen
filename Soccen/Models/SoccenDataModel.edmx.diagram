@@ -5,8 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="13f878d1490f4af593a73f404df3e700" Name="Diagram1">
-        <EntityTypeShape EntityType="soccenModel.bank" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="soccenModel.bankaccount" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="soccenModel.customer" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="soccenModel.customersocialtype" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="soccenModel.service" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
@@ -14,8 +12,6 @@
         <EntityTypeShape EntityType="soccenModel.servicesocialtype" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="soccenModel.socialtype" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="soccenModel.street" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
-        <AssociationConnector Association="soccenModel.BankBankAccount" ManuallyRouted="false" />
-        <AssociationConnector Association="soccenModel.CustomerBankAccount" ManuallyRouted="false" />
         <AssociationConnector Association="soccenModel.CustomerSocialType1" ManuallyRouted="false" />
         <AssociationConnector Association="soccenModel.IdStreet" ManuallyRouted="false" />
         <AssociationConnector Association="soccenModel.ServiceExecutionCustomer" ManuallyRouted="false" />

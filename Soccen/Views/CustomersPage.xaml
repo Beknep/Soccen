@@ -56,7 +56,7 @@
             <Grid Grid.Column="0">
 
 
-                <Grid x:Name="existingCustomerGrid" DataContext="{StaticResource customersViewSource}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
+                <Grid x:Name="existingCustomerGrid" DataContext="{StaticResource customersViewSource}"  HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" >
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -139,7 +139,7 @@
                         <TextBox x:Name="cityTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding City, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
 
                         <Label Content="Вулиця:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
-                        <ComboBox x:Name="streetComboBox" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={StaticResource streetViewSource}}" DisplayMemberPath="Title" SelectedItem="{Binding Source={StaticResource customersViewSource}, Path=street}" Style="{StaticResource BaseInfoComboBox}" />
+                        <ComboBox x:Name="streetComboBox" Grid.Column="1" Grid.Row="2"  ItemsSource="{Binding Source={StaticResource streetViewSource}}" DisplayMemberPath="Title" SelectedItem="{Binding Source={StaticResource customersViewSource}, Path=street}" Style="{StaticResource BaseInfoComboBox}" />
 
                         <Label Content="Будинок:" Grid.Column="0"  Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="houseTextBox" Grid.Column="1" Grid.Row="3" Text="{Binding House, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
@@ -164,6 +164,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <Label Content="Контактна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
@@ -179,6 +180,9 @@
 
                         <Label Content="Ідентифікаційний код:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="identificationTextBox" Grid.Column="1" Grid.Row="4" Text="{Binding Identification, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Пенсійне:" Grid.Column="0" Grid.Row="5" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="pensionTextBox" Grid.Column="1" Grid.Row="5" Text="{Binding Pension, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
                     </Grid>
 
                     <Grid x:Name="CustomerElseInfoGrid" Grid.Row="0" Grid.Column="3">
@@ -264,8 +268,8 @@
 
                         <Label Content="Стать:" Grid.Column="0" Grid.Row="7" Style="{StaticResource BaseInfoLabel}"/>
                         <StackPanel Grid.Column="1" Grid.Row="7">
-                            <RadioButton x:Name="add_femaleRadioButton" GroupName="CharacterGender" Content="Жінка" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Жінка'}" Style="{StaticResource BaseRadioButton}" />
-                            <RadioButton x:Name="add_maleRadioButton" GroupName="CharacterGender" Content="Чоловік" IsChecked="{Binding Gender, Converter={Models:RadioButtonCheckedConverter}, ConverterParameter='Чоловік'}" Style="{StaticResource BaseRadioButton}" />
+                            <RadioButton x:Name="add_femaleRadioButton" GroupName="add_CharacterGender" Content="Жінка" Style="{StaticResource BaseRadioButton}" />
+                            <RadioButton x:Name="add_maleRadioButton" GroupName="add_CharacterGender" Content="Чоловік" Style="{StaticResource BaseRadioButton}" />
                         </StackPanel>
                     </Grid>
 
@@ -281,6 +285,8 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <Label Content="Адреса" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
@@ -289,13 +295,16 @@
                         <TextBox x:Name="add_cityTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding City, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
 
                         <Label Content="Вулиця:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
-                        <ComboBox x:Name="add_streetComboBox" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={StaticResource streetViewSource}}" DisplayMemberPath="Title" Style="{StaticResource BaseInfoComboBox}"/>
+                        <ComboBox x:Name="add_streetComboBox" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={StaticResource streetViewSource}}" SelectedItem="{Binding street}" DisplayMemberPath="Title" Style="{StaticResource BaseInfoComboBox}"/>
 
                         <Label Content="Будинок:" Grid.Column="0"  Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="add_houseTextBox" Grid.Column="1" Grid.Row="3" Text="{Binding House, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
 
                         <Label Content="Квартира:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="add_apartmentTextBox" Grid.Column="1"  Grid.Row="4" Text="{Binding Apartment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Додаткова інформація:" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BaseInfoLabel}" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="add_additInfoTextBox" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource BaseInfoOtherTextBox}" Text="{Binding Other, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}"/>
                     </Grid>
 
                     <Grid x:Name="newCustomerContactInfoGrid" Grid.Row="0" Grid.Column="2">
@@ -305,6 +314,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -325,6 +335,9 @@
 
                         <Label Content="Ідентифікаційний:" Grid.Column="0" Grid.Row="4" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="add_identificationTextBox" Grid.Column="1" Grid.Row="4" Text="{Binding Identification, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Пенсійне:" Grid.Column="0" Grid.Row="5" Style="{StaticResource BaseInfoLabel}"/>
+                        <TextBox x:Name="add_pension" Grid.Column="1" Grid.Row="5" Text="{Binding Pension, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
                     </Grid>
 
                     <Grid x:Name="newCustomerElseInfoGrid" Grid.Row="0" Grid.Column="3">
@@ -404,7 +417,7 @@
                     <DataGridTextColumn x:Name="patronymicColumn" Binding="{Binding Patronymic}" Header="По батькові" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="registrationdateColumn" Header="Дата реєстрації" Binding="{Binding RegistrationDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="birthdateColumn" Header="Дата народження" Binding="{Binding BirthDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="GenderColumn" Binding="{Binding Gender}" Header="Жінка" Width="SizeToHeader" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="GenderColumn" Binding="{Binding Gender}" Header="Стать" Width="SizeToHeader" IsReadOnly="True"/>
 
                     <DataGridTextColumn x:Name="cityColumn" Binding="{Binding City}" Header="Місто" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="streetColumn" Binding="{Binding street.Title}" Header="Вулиця" IsReadOnly="True"/>
@@ -421,10 +434,6 @@
                     <DataGridCheckBoxColumn x:Name="otgStatusColumn" Binding="{Binding OtgStatus}" Header="ОТГ"  Width="SizeToHeader" IsReadOnly="True"/>
                     <DataGridCheckBoxColumn x:Name="liveStatusColumn" Binding="{Binding LiveStatus}" Header="Помер" Width="SizeToHeader" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="deathdateColumn" Header="Дата смерті" Binding="{Binding DeathDate, StringFormat='dd.MM.yyyy'}" IsReadOnly="True"/>
-
-
-
-
 
                 </DataGrid.Columns>
             </DataGrid>

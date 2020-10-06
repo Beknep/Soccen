@@ -5,21 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище soccenModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="bank">
-          <Key>
-            <PropertyRef Name="IdBank" />
-          </Key>
-          <Property Name="IdBank" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="45" Nullable="false" />
-        </EntityType>
-        <EntityType Name="bankaccount">
-          <Key>
-            <PropertyRef Name="IdBankAccount" />
-          </Key>
-          <Property Name="IdBankAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BankId" Type="int" />
-          <Property Name="CustomerId" Type="int" />
-        </EntityType>
         <EntityType Name="customer">
           <Key>
             <PropertyRef Name="IdCustomer" />
@@ -33,7 +18,7 @@
           <Property Name="Apartment" Type="int" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="Passport" Type="varchar" MaxLength="20" />
-          <Property Name="Identification" Type="int" />
+          <Property Name="Identification" Type="varchar" MaxLength="15"/>
           <Property Name="Pension" Type="varchar" MaxLength="20" />
           <Property Name="Email" Type="varchar" MaxLength="40" />
           <Property Name="Phonenumber" Type="varchar" MaxLength="20" />
@@ -44,6 +29,7 @@
           <Property Name="StreetId" Type="int" />
           <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Other" Type="longtext" />
+          <Property Name="Department" Type="varchar" MaxLength="20"/>
         </EntityType>
         <EntityType Name="customersocialtype">
           <Key>
@@ -96,30 +82,6 @@
           <Property Name="IdStreet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="45" />
         </EntityType>
-        <Association Name="BankBankAccount">
-          <End Role="bank" Type="Self.bank" Multiplicity="0..1" />
-          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bank">
-              <PropertyRef Name="IdBank" />
-            </Principal>
-            <Dependent Role="bankaccount">
-              <PropertyRef Name="BankId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CustomerBankAccount">
-          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
-          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="customer">
-              <PropertyRef Name="IdCustomer" />
-            </Principal>
-            <Dependent Role="bankaccount">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CustomerSocialType1">
           <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
           <End Role="customersocialtype" Type="Self.customersocialtype" Multiplicity="*" />
@@ -205,8 +167,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище soccenModelContainer">
-          <EntitySet Name="bank" EntityType="Self.bank" Schema="soccen" store:Type="Tables" />
-          <EntitySet Name="bankaccount" EntityType="Self.bankaccount" Schema="soccen" store:Type="Tables" />
           <EntitySet Name="customer" EntityType="Self.customer" Schema="soccen" store:Type="Tables" />
           <EntitySet Name="customersocialtype" EntityType="Self.customersocialtype" Schema="soccen" store:Type="Tables" />
           <EntitySet Name="service" EntityType="Self.service" Schema="soccen" store:Type="Tables" />
@@ -214,14 +174,6 @@
           <EntitySet Name="servicesocialtype" EntityType="Self.servicesocialtype" Schema="soccen" store:Type="Tables" />
           <EntitySet Name="socialtype" EntityType="Self.socialtype" Schema="soccen" store:Type="Tables" />
           <EntitySet Name="street" EntityType="Self.street" Schema="soccen" store:Type="Tables" />
-          <AssociationSet Name="BankBankAccount" Association="Self.BankBankAccount">
-            <End Role="bank" EntitySet="bank" />
-            <End Role="bankaccount" EntitySet="bankaccount" />
-          </AssociationSet>
-          <AssociationSet Name="CustomerBankAccount" Association="Self.CustomerBankAccount">
-            <End Role="customer" EntitySet="customer" />
-            <End Role="bankaccount" EntitySet="bankaccount" />
-          </AssociationSet>
           <AssociationSet Name="CustomerSocialType1" Association="Self.CustomerSocialType1">
             <End Role="customer" EntitySet="customer" />
             <End Role="customersocialtype" EntitySet="customersocialtype" />
@@ -255,24 +207,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="soccenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="bank">
-          <Key>
-            <PropertyRef Name="IdBank" />
-          </Key>
-          <Property Name="IdBank" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="bankaccounts" Relationship="Self.BankBankAccount" FromRole="bank" ToRole="bankaccount" />
-        </EntityType>
-        <EntityType Name="bankaccount">
-          <Key>
-            <PropertyRef Name="IdBankAccount" />
-          </Key>
-          <Property Name="IdBankAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BankId" Type="Int32" />
-          <Property Name="CustomerId" Type="Int32" />
-          <NavigationProperty Name="bank" Relationship="Self.BankBankAccount" FromRole="bankaccount" ToRole="bank" />
-          <NavigationProperty Name="customer" Relationship="Self.CustomerBankAccount" FromRole="bankaccount" ToRole="customer" />
-        </EntityType>
         <EntityType Name="customer">
           <Key>
             <PropertyRef Name="IdCustomer" />
@@ -286,7 +220,7 @@
           <Property Name="Apartment" Type="Int32" />
           <Property Name="BirthDate" Type="DateTime" />
           <Property Name="Passport" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Identification" Type="Int32" />
+          <Property Name="Identification" Type="String" MaxLength="15" FixedLength="false" Unicode="false"/>
           <Property Name="Pension" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Phonenumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -295,7 +229,7 @@
           <Property Name="RegistrationDate" Type="DateTime" Nullable="false" />
           <Property Name="DeathDate" Type="DateTime" />
           <Property Name="StreetId" Type="Int32" />
-          <NavigationProperty Name="bankaccounts" Relationship="Self.CustomerBankAccount" FromRole="customer" ToRole="bankaccount" />
+          <Property Name ="Department" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="customersocialtypes" Relationship="Self.CustomerSocialType1" FromRole="customer" ToRole="customersocialtype" />
           <NavigationProperty Name="street" Relationship="Self.IdStreet" FromRole="customer" ToRole="street" />
           <NavigationProperty Name="serviceexecutions" Relationship="Self.ServiceExecutionCustomer" FromRole="customer" ToRole="serviceexecution" />
@@ -364,30 +298,6 @@
           <Property Name="Title" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="customers" Relationship="Self.IdStreet" FromRole="street" ToRole="customer" />
         </EntityType>
-        <Association Name="BankBankAccount">
-          <End Role="bank" Type="Self.bank" Multiplicity="0..1" />
-          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bank">
-              <PropertyRef Name="IdBank" />
-            </Principal>
-            <Dependent Role="bankaccount">
-              <PropertyRef Name="BankId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CustomerBankAccount">
-          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
-          <End Role="bankaccount" Type="Self.bankaccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="customer">
-              <PropertyRef Name="IdCustomer" />
-            </Principal>
-            <Dependent Role="bankaccount">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CustomerSocialType1">
           <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
           <End Role="customersocialtype" Type="Self.customersocialtype" Multiplicity="*" />
@@ -473,8 +383,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="soccenEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="banks" EntityType="Self.bank" />
-          <EntitySet Name="bankaccounts" EntityType="Self.bankaccount" />
           <EntitySet Name="customers" EntityType="Self.customer" />
           <EntitySet Name="customersocialtypes" EntityType="Self.customersocialtype" />
           <EntitySet Name="services" EntityType="Self.service" />
@@ -482,14 +390,6 @@
           <EntitySet Name="servicesocialtypes" EntityType="Self.servicesocialtype" />
           <EntitySet Name="socialtypes" EntityType="Self.socialtype" />
           <EntitySet Name="streets" EntityType="Self.street" />
-          <AssociationSet Name="BankBankAccount" Association="Self.BankBankAccount">
-            <End Role="bank" EntitySet="banks" />
-            <End Role="bankaccount" EntitySet="bankaccounts" />
-          </AssociationSet>
-          <AssociationSet Name="CustomerBankAccount" Association="Self.CustomerBankAccount">
-            <End Role="customer" EntitySet="customers" />
-            <End Role="bankaccount" EntitySet="bankaccounts" />
-          </AssociationSet>
           <AssociationSet Name="CustomerSocialType1" Association="Self.CustomerSocialType1">
             <End Role="customer" EntitySet="customers" />
             <End Role="customersocialtype" EntitySet="customersocialtypes" />
@@ -525,23 +425,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище soccenModelContainer" CdmEntityContainer="soccenEntities">
-          <EntitySetMapping Name="banks">
-            <EntityTypeMapping TypeName="soccenModel.bank">
-              <MappingFragment StoreEntitySet="bank">
-                <ScalarProperty Name="IdBank" ColumnName="IdBank" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="bankaccounts">
-            <EntityTypeMapping TypeName="soccenModel.bankaccount">
-              <MappingFragment StoreEntitySet="bankaccount">
-                <ScalarProperty Name="IdBankAccount" ColumnName="IdBankAccount" />
-                <ScalarProperty Name="BankId" ColumnName="BankId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="customers">
             <EntityTypeMapping TypeName="soccenModel.customer">
               <MappingFragment StoreEntitySet="customer">
@@ -565,6 +448,7 @@
                 <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="DeathDate" ColumnName="DeathDate" />
                 <ScalarProperty Name="StreetId" ColumnName="StreetId" />
+                <ScalarProperty Name="Department" ColumnName="Department"/>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

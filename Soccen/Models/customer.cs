@@ -17,7 +17,6 @@ namespace Soccen.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public customer()
         {
-            this.bankaccounts = new ObservableCollection<bankaccount>();
             this.customersocialtypes = new ObservableCollection<customersocialtype>();
             this.serviceexecutions = new ObservableCollection<serviceexecution>();
         }
@@ -31,10 +30,11 @@ namespace Soccen.Models
         public Nullable<int> Apartment { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Passport { get; set; }
-        public Nullable<int> Identification { get; set; }
+        public string Identification { get; set; }
         public string Pension { get; set; }
         public string Email { get; set; }
         public string Phonenumber { get; set; }
+        public string Department { get; set; }
         public Nullable<sbyte> LiveStatus { get; set; }
         public Nullable<sbyte> OtgStatus { get; set; }
         public System.DateTime RegistrationDate { get; set; }
@@ -43,8 +43,6 @@ namespace Soccen.Models
         public string Gender { get; set; }
         public string Other { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<bankaccount> bankaccounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<customersocialtype> customersocialtypes { get; set; }
         public virtual street street { get; set; }
