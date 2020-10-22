@@ -139,7 +139,7 @@
                         <TextBox x:Name="cityTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding City, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
 
                         <Label Content="Вулиця:" Grid.Column="0" Grid.Row="2" Style="{StaticResource BaseInfoLabel}"/>
-                        <ComboBox x:Name="streetComboBox" Grid.Column="1" Grid.Row="2"  ItemsSource="{Binding Source={StaticResource streetViewSource}}" DisplayMemberPath="Title" SelectedItem="{Binding Source={StaticResource customersViewSource}, Path=street}" Style="{StaticResource BaseInfoComboBox}" />
+                        <ComboBox x:Name="streetComboBox" Grid.Column="1" Grid.Row="2"  ItemsSource="{Binding Source={StaticResource streetViewSource}}" DisplayMemberPath="Title" SelectedValue="{Binding Source={StaticResource customersViewSource}, Path=street}" Style="{StaticResource BaseInfoComboBox}" />
 
                         <Label Content="Будинок:" Grid.Column="0"  Grid.Row="3" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="houseTextBox" Grid.Column="1" Grid.Row="3" Text="{Binding House, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
@@ -165,6 +165,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <Label Content="Контактна інформація" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}"/>
@@ -183,6 +184,15 @@
 
                         <Label Content="Пенсійне:" Grid.Column="0" Grid.Row="5" Style="{StaticResource BaseInfoLabel}"/>
                         <TextBox x:Name="pensionTextBox" Grid.Column="1" Grid.Row="5" Text="{Binding Pension, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource BaseInfoTextBox}"/>
+
+                        <Label Content="Відділення" Grid.Column="0" Grid.Row="6" Style="{StaticResource BaseInfoLabel}"/>
+                        <ComboBox x:Name="departmentComboBox" Grid.Column="1" Grid.Row="6"  SelectedValue="{Binding Source={StaticResource customersViewSource}, Path=Department}" Style="{StaticResource BaseInfoComboBox}">
+                            <ComboBoxItem Content="Соціальної допомоги дома"/>
+                            <ComboBoxItem Content="Комплексної реабілітації та денного догляду"/>
+                            <ComboBoxItem Content="Організації надання адресної натуральної та грошової допомоги"/>
+                            <ComboBoxItem Content="Соціальної роботи із сім'ями, дітьми та молоддю"/>
+                            <ComboBoxItem Content="Без відділеня"/>
+                        </ComboBox>
                     </Grid>
 
                     <Grid x:Name="CustomerElseInfoGrid" Grid.Row="0" Grid.Column="3">
@@ -409,7 +419,7 @@
         </Grid>
 
         <Grid Grid.Row="3" DataContext="{StaticResource customersViewSource}">
-            <DataGrid x:Name="customerDataGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" MouseDoubleClick="customerDataGrid_MouseDoubleClick" >
+            <DataGrid x:Name="customerDataGrid" ItemsSource="{Binding}" Style="{StaticResource BaseDataGridStyle}" CanUserAddRows="False" MouseDoubleClick="CustomerDataGrid_MouseDoubleClick" >
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="idCustomerColumn" Binding="{Binding IdCustomer}" Header="ID" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Ім'я" IsReadOnly="True"/>

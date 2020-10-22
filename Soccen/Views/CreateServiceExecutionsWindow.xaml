@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Soccen.Views"
         mc:Ignorable="d"
-        Title="Керування послугами" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="../Images/Logo.png" Width="900" ResizeMode="NoResize" Height="300">
+        Title="Створення послуг" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="../Images/Logo.png" Width="900" ResizeMode="NoResize" Height="300">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>

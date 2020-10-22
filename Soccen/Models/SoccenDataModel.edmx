@@ -229,7 +229,7 @@
           <Property Name="RegistrationDate" Type="DateTime" Nullable="false" />
           <Property Name="DeathDate" Type="DateTime" />
           <Property Name="StreetId" Type="Int32" />
-          <Property Name ="Department" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name ="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="customersocialtypes" Relationship="Self.CustomerSocialType1" FromRole="customer" ToRole="customersocialtype" />
           <NavigationProperty Name="street" Relationship="Self.IdStreet" FromRole="customer" ToRole="street" />
           <NavigationProperty Name="serviceexecutions" Relationship="Self.ServiceExecutionCustomer" FromRole="customer" ToRole="serviceexecution" />

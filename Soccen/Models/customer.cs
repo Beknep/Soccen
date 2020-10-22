@@ -34,12 +34,12 @@ namespace Soccen.Models
         public string Pension { get; set; }
         public string Email { get; set; }
         public string Phonenumber { get; set; }
-        public string Department { get; set; }
         public Nullable<sbyte> LiveStatus { get; set; }
         public Nullable<sbyte> OtgStatus { get; set; }
         public System.DateTime RegistrationDate { get; set; }
         public Nullable<System.DateTime> DeathDate { get; set; }
         public Nullable<int> StreetId { get; set; }
+        public string Department { get; set; }
         public string Gender { get; set; }
         public string Other { get; set; }
     

@@ -17,11 +17,11 @@ namespace Soccen.Views
     /// </summary>
     public partial class CustomersPage : Page
     {
-        soccenEntities context = new soccenEntities();
-        CollectionViewSource streetViewSource;
-        CollectionViewSource customersViewSource;
-        CollectionViewSource socialTypesViewSource;
-        CollectionViewSource customercustomersocialtypesViewSource;
+        readonly soccenEntities context = new soccenEntities();
+        readonly CollectionViewSource streetViewSource;
+        readonly CollectionViewSource customersViewSource;
+        readonly CollectionViewSource socialTypesViewSource;
+        readonly CollectionViewSource customercustomersocialtypesViewSource;
 
 
         public CustomersPage()
@@ -200,14 +200,14 @@ namespace Soccen.Views
         private void AddCommandHandler(object sender, RoutedEventArgs e)
         {
 
-            clear(sender, e);
+            Clear(sender, e);
 
             existingCustomerGrid.Visibility = Visibility.Collapsed;
             newCustomerGrid.Visibility = Visibility.Visible;
             customerSocialTypeGrid.Visibility = Visibility.Collapsed;
         }
 
-        void clear(object sender, RoutedEventArgs e)
+        void Clear(object sender, RoutedEventArgs e)
         {
             add_apartmentTextBox.Text = "";
             add_cityTextBox.Text = "Коломия";
@@ -231,7 +231,7 @@ namespace Soccen.Views
         {
             if (newCustomerGrid.IsVisible)
             {
-                clear(sender, e);
+                Clear(sender, e);
             } 
             else if (existingCustomerGrid.IsVisible)
             {
@@ -257,7 +257,7 @@ namespace Soccen.Views
             }
         }
 
-        private void customerDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void CustomerDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             existingCustomerGrid.Visibility = Visibility.Visible;
             newCustomerGrid.Visibility = Visibility.Collapsed;

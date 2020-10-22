@@ -57,7 +57,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <DatePicker x:Name="periodDatePicker" Style="{StaticResource ServiceExecutionInfoDatePicker}" SelectedDate="{x:Static sys:DateTime.Now}"  Text="MMM-yyyy"  Models:DatePickerCalendar.IsMonthYear="True" 
+            <DatePicker x:Name="periodDatePicker" Style="{StaticResource BaseInfoDatePicker}" SelectedDate="{x:Static sys:DateTime.Now}"  Text="MMM-yyyy"  Models:DatePickerCalendar.IsMonthYear="True" 
             Models:DatePickerDateFormat.DateFormat="MMM-yyyy" SelectedDateChanged="FilteringSelectionChanged"/>
 
             <Button x:Name="createServiceExecutionButton" Content=" Створити набір послуг " Style="{StaticResource ServiceExecutionControlButtonStyle}" Command="{StaticResource CreateServiceExecutionsCommand}"/>

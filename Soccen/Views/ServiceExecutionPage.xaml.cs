@@ -74,7 +74,8 @@ namespace Soccen.Views
 
         private void CreateServiceExecutionsCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            
+            CreateServiceExecutionsWindow window = new CreateServiceExecutionsWindow();
+            window.ShowDialog();
         }
 
         private void OpenServiceExecutionStatisticWindowButtonCommandHandler(object sender, ExecutedRoutedEventArgs e)
@@ -88,7 +89,7 @@ namespace Soccen.Views
                     tempComboBoxText = ((service)serviceComboBox.SelectedItem).Title; 
 
                 ServiceExecutionStatisticWindow window = new ServiceExecutionStatisticWindow(serviceExecutionViewSource, tempComboBoxText, ((DateTime)periodDatePicker.SelectedDate).ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("uk-UA")));
-                window.Show();
+                window.ShowDialog();
             }
         }
 
